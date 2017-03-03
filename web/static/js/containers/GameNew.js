@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import axios from 'axios';
 
 import Box from 'grommet/components/Box';
@@ -11,7 +13,7 @@ import DateTime from 'grommet/components/DateTime';
 import Footer from 'grommet/components/Footer';
 import Button from 'grommet/components/Button';
 
-export default class GamesNew extends Component {
+export default class GameNew extends Component {
   constructor(props) {
     super(props);
 
@@ -29,10 +31,7 @@ export default class GamesNew extends Component {
   onFormSubmit = (event) => {
     event.preventDefault();
 
-    axios.post('/api/v1/games', this.state)
-      .then(() => {
-        this.context.router.push("/games");
-      });
+    this.props.createGame(this.state);
   }
 
   onGameTitleChange = (event) => {
@@ -78,4 +77,4 @@ export default class GamesNew extends Component {
       </Box>
     );
   }
-}
+} 

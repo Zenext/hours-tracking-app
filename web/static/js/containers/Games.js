@@ -7,7 +7,7 @@ import Table from 'grommet/components/Table';
 import TableRow from 'grommet/components/TableRow';
 import Button from 'grommet/components/Button';
 
-class GamesShow extends Component {
+class GamesContainer extends Component {
   onGameSelected = (gameName) => {
     console.log(gameName)
 
@@ -51,4 +51,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(GamesShow);
+export default connect(mapStateToProps)(GamesContainer);

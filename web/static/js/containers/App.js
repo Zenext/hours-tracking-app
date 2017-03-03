@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import App from 'grommet/components/App';
 import Split from 'grommet/components/Split';
 import Box from 'grommet/components/Box';
-import Sidebar from './Sidebar';
+import Sidebar from '../components/Sidebar';
 
 export default class Application extends Component {
   render() {
