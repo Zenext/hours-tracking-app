@@ -70,33 +70,39 @@ class RecordsNew extends Component {
               Add record
             </Heading>
           </Header>
+          
           <FormField label='Game name'>
             <Select options={this.props.games}
               value={this.state.selectedGame}
               onChange={this.onSelectGame}>
             </Select>
           </FormField>
+          
           <FormField label='Type of work'>
             <Select options={this.props.workTypes}
               value={this.state.selectedWorkType}
               onChange={this.onSelectWorkType}>
             </Select>
           </FormField>
+          
           <FormField label="Date">
             <DateTime format='D/M/YYYY'
               onChange={this.onDateFieldChange}
               value={this.state.date} />
           </FormField>
+          
           <FormField label="Person">
             <TextInput name="person"
               value={this.state.person}
               onDOMChange={this.onPersonFieldChange} />
           </FormField>
+          
           <FormField label="Hours">
             <TextInput name="hours"
               value={this.state.hours}
               onDOMChange={this.onHoursFieldChange} />
           </FormField>
+          
           <Footer pad={{"vertical": "medium"}}>
             <Button onClick={this.onFormSubmit} label='Add' type='submit' primary={true} />
           </Footer>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 
 import Box from 'grommet/components/Box';
 import Table from 'grommet/components/Table';
@@ -8,6 +8,12 @@ import TableRow from 'grommet/components/TableRow';
 import Button from 'grommet/components/Button';
 
 class GamesShow extends Component {
+  onGameSelected = (gameName) => {
+    console.log(gameName)
+
+    browserHistory.push(`/games/${gameName}`)
+  }
+  
   render() {
     return (
       <Box size='large'
@@ -24,7 +30,8 @@ class GamesShow extends Component {
           <tbody>
             {this.props.games.map(name => {
               return (
-                <TableRow key={name}>
+                <TableRow key={name}
+                  onClick={this.onGameSelected.bind(this, name)}>
                   <td>{name}</td>
                   <td>03/03/2017</td>
                 </TableRow>

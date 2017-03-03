@@ -8,8 +8,9 @@ import GamesNew from '../games/GamesNew';
 
 export default (
   <Route path="/" component={App}>
-    <Route path="records/new" component={RecordsNew} />
-    <Route path="games" component={GamesShow} />
-    <Route path="games/new" component={GamesNew} />
+    <Route path="/records/new" component={RecordsNew} />
+    <Route path="/games" component={GamesShow} />
+    <Route path="/games/:name" component={GamesNew} />
+    <Route path="/games/new" component={GamesNew} />
   </Route>
 );

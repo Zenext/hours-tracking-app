@@ -58,6 +58,9 @@ export default class GamesNew extends Component {
           </FormField>
           <Footer pad={{"vertical": "medium"}}>
             <Button onClick={this.onFormSubmit} label='Add' type='submit' primary={true} />
+            <Box pad={{"horizontal": "medium"}}>
+              <Button path="/games" label='Cancel' type='button' />
+            </Box>
           </Footer>
         </Form>
       </Box>
