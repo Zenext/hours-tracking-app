@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import axios from 'axios';
 
 import Box from 'grommet/components/Box';
 import Form from 'grommet/components/Form';
@@ -16,6 +17,7 @@ export default class GamesNew extends Component {
 
     this.state = {
       gameName: '',
+      abbrevation: '',
       startDate: new Date().toLocaleDateString("en-GB")
     };
   }
@@ -27,11 +29,18 @@ export default class GamesNew extends Component {
   onFormSubmit = (event) => {
     event.preventDefault();
 
-    this.context.router.push("/games");
+    axios.post('/api/v1/games', this.state)
+      .then(() => {
+        this.context.router.push("/games");
+      });
   }
 
   onGameNameChange = (event) => {
     this.setState({gameName: event.target.value});
+  }
+
+  onAbbChange = (event) => {
+    this.setState({abbrevation: event.target.value});
   }
 
   onDateChange = (value) => {
@@ -50,6 +59,9 @@ export default class GamesNew extends Component {
           </Header>
           <FormField label='Game Name'>
             <TextInput onDOMChange={this.onGameNameChange} />
+          </FormField>
+          <FormField label='Abbrevation'>
+            <TextInput onDOMChange={this.onAbbChange} />
           </FormField>
           <FormField label='Start date'>
             <DateTime format='D/M/YYYY'
