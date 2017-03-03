@@ -1,10 +1,11 @@
 defmodule Hours.Game do
   use Hours.Web, :model
 
-  @derive {Poison.Encoder, only: [:title, :start_date]}
+  @derive {Poison.Encoder, only: [:title, :start_date, :abbrevation]}
 
   schema "games" do
     field :title, :string
+    field :abbrevation, :string
     field :start_date, :string
 
     timestamps()
@@ -12,7 +13,7 @@ defmodule Hours.Game do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:title, :start_date])
-    |> validate_required([:title, :start_date])
+    |> cast(params, [:title, :start_date, :abbrevation])
+    |> validate_required([:title, :start_date, :abbrevation])
   end
 end

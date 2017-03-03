@@ -12,13 +12,7 @@ defmodule Hours.Router do
   pipeline :api do
     plug :accepts, ["json"]
   end
-
-  scope "/", Hours do
-    pipe_through :browser # Use the default browser stack
-
-    get "/*path", PageController, :index
-  end
-
+  
   scope "/api", Hours do
     pipe_through :api
 
@@ -27,6 +21,13 @@ defmodule Hours.Router do
       resources "/records", RecordController, only: [:index, :create]
     end
   end
+  
+  scope "/", Hours do
+    pipe_through :browser # Use the default browser stack
+
+    get "/*path", PageController, :index
+  end
+
 
   # Other scopes may use custom stacks.
   # scope "/api", Hours do

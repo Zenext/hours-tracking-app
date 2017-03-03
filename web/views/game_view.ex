@@ -13,7 +13,8 @@ defmodule Hours.GameView do
     %{
       id: game.id,
       title: game.title,
-      start_date: game.start_date
+      start_date: game.start_date,
+      abbrevation: game.abbrevation
     }
   end
 end

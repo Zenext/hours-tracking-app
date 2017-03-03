@@ -16,9 +16,9 @@ export default class GamesNew extends Component {
     super(props);
 
     this.state = {
-      gameName: '',
+      title: '',
       abbrevation: '',
-      startDate: new Date().toLocaleDateString("en-GB")
+      start_date: new Date().toLocaleDateString("en-GB")
     };
   }
   
@@ -35,8 +35,8 @@ export default class GamesNew extends Component {
       });
   }
 
-  onGameNameChange = (event) => {
-    this.setState({gameName: event.target.value});
+  onGameTitleChange = (event) => {
+    this.setState({title: event.target.value});
   }
 
   onAbbChange = (event) => {
@@ -44,7 +44,7 @@ export default class GamesNew extends Component {
   }
 
   onDateChange = (value) => {
-    this.setState({startDate: value});
+    this.setState({start_date: value});
   }
 
   render() {
@@ -58,7 +58,7 @@ export default class GamesNew extends Component {
             </Heading>
           </Header>
           <FormField label='Game Name'>
-            <TextInput onDOMChange={this.onGameNameChange} />
+            <TextInput onDOMChange={this.onGameTitleChange} />
           </FormField>
           <FormField label='Abbrevation'>
             <TextInput onDOMChange={this.onAbbChange} />
@@ -66,7 +66,7 @@ export default class GamesNew extends Component {
           <FormField label='Start date'>
             <DateTime format='D/M/YYYY'
               onChange={this.onDateChange}
-              value={this.state.startDate} />
+              value={this.state.start_date} />
           </FormField>
           <Footer pad={{"vertical": "medium"}}>
             <Button onClick={this.onFormSubmit} label='Add' type='submit' primary={true} />
