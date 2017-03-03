@@ -4,6 +4,7 @@ import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import 'grommet/scss/vanilla/index.scss';
 
 import rootReducer from './app/reducers'
 import routes from './app/routes';

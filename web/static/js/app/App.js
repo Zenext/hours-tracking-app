@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
+import App from 'grommet/components/App';
+import Split from 'grommet/components/Split';
+import Box from 'grommet/components/Box';
 import Sidebar from './Sidebar';
 
-export default class App extends Component {
+export default class Application extends Component {
   render() {
     return (
-      <MuiThemeProvider>
-        <div className="columns">
+      <App centered={false}>
+        <Split flex='right'>
           <Sidebar />
-          {this.props.children}  
-        </div>
-      </MuiThemeProvider>
+          <Box>
+            {this.props.children}
+          </Box>
+        </Split>
+      </App>
     );
   }
 }

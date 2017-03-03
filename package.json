@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "bulma": "^0.3.2",
-    "material-ui": "^0.17.0",
+    "grommet": "^1.2.1",
     "phoenix": "file:deps/phoenix",
     "phoenix_html": "file:deps/phoenix_html",
     "plugin": "^0.3.3",
