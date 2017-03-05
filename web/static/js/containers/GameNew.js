@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { createGame } from '../actions/game';
 import axios from 'axios';
 
 import Box from 'grommet/components/Box';
@@ -13,7 +14,7 @@ import DateTime from 'grommet/components/DateTime';
 import Footer from 'grommet/components/Footer';
 import Button from 'grommet/components/Button';
 
-export default class GameNew extends Component {
+class GameNew extends Component {
   constructor(props) {
     super(props);
 
@@ -78,3 +79,9 @@ export default class GameNew extends Component {
     );
   }
 } 
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ createGame }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(GameNew);
