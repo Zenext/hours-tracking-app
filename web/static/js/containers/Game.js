@@ -8,7 +8,7 @@ import Button from 'grommet/components/Button';
 import Tabs from 'grommet/components/Tabs';
 import Tab from 'grommet/components/Tab';
 
-import { total } from '../components/GameInfoTable';
+import { gameInfoTable } from '../components/GameInfoTable';
 
 export default class Game extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ export default class Game extends Component {
 
        <Tabs>
          <Tab title='Total'>
-          {total()}
+            {gameInfoTable()}
          </Tab>
          <Tab title='By sprint'>
            Sprint

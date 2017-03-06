@@ -37,7 +37,7 @@ const renderTableBody = (values) => {
   )
 };
 
-const total = (options) => {
+const gameInfoTable = (options) => {
   return (
     <Table>
       {renderTableHead(['Type', 'Hours', 'Days'])}
@@ -51,5 +51,5 @@ const total = (options) => {
 };
 
 export {
-  total
+  gameInfoTable
 }
