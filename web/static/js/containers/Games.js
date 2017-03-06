@@ -9,8 +9,6 @@ import Button from 'grommet/components/Button';
 
 class GamesContainer extends Component {
   onGameSelected = (gameName) => {
-    console.log(gameName)
-
     browserHistory.push(`/games/${gameName}`)
   }
   
