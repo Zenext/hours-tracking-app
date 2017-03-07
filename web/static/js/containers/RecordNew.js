@@ -75,7 +75,6 @@ class RecordsNew extends Component {
     }
 
     const gamesByName = this.props.games.map(game => game.title);
-    console.log(this.state)
     
     return (
       <Box align='center'

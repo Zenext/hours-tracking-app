@@ -32,8 +32,10 @@ class GameNew extends Component {
   onFormSubmit = (event) => {
     event.preventDefault();
 
-    this.props.createGame(this.state);
-    this.context.router.push("/games");
+    const item = this.props.createGame(this.state)
+    item.then(() => {
+      this.context.router.push("/games");
+    })
   }
 
   onGameTitleChange = (event) => {

@@ -16,8 +16,10 @@ const gamesReceived = data => {
 
 export function createGame(data) {
   return dispatch => {
-    axios.post('/api/v1/games', data)
-      .then(dispatch(gameCreated(data)))
+    return axios.post('/api/v1/games', data)
+      .then((response) => {
+        dispatch(gameCreated(response.data.game))
+      });
   } 
 }
 
