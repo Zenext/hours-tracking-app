@@ -33,6 +33,7 @@ class GameNew extends Component {
     event.preventDefault();
 
     this.props.createGame(this.state);
+    this.context.router.push("/games");
   }
 
   onGameTitleChange = (event) => {

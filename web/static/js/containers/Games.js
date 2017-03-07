@@ -22,6 +22,7 @@ class GamesContainer extends Component {
           <thead>
             <tr>
               <th><b>Name</b></th>
+              <th><b>Abb</b></th>
               <th><b>Start Date</b></th>
             </tr>
           </thead>
@@ -31,6 +32,7 @@ class GamesContainer extends Component {
                 <TableRow key={name}
                   onClick={this.onGameSelected.bind(this, name)}>
                   <td>{name}</td>
+                  <td>Abb</td>
                   <td>03/03/2017</td>
                 </TableRow>
               )

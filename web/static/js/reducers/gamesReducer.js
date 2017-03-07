@@ -3,7 +3,7 @@ const initialState = ['Diamond Bonanza', 'Pirates Plunder', 'Triple Win Cafe', '
 export default function(state = initialState, action) {
   switch(action.type) {
     case 'CREATE_NEW_GAME':
-      console.log('Create new game')
+      return state = [...state, action.payload.title];
     default: return state
   }
 }
