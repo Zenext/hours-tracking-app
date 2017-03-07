@@ -7,7 +7,8 @@ import thunk from 'redux-thunk';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import 'grommet/scss/vanilla/index.scss';
 
-import rootReducer from './reducers'
+import { initApp } from './actions';
+import rootReducer from './reducers';
 import routes from './routes';
 
 injectTapEventPlugin();
@@ -16,6 +17,8 @@ const store = createStore(
   rootReducer,
   applyMiddleware(thunk)
 );
+
+store.dispatch(initApp());
 
 ReactDOM.render(
   <Provider store={store}>

@@ -16,14 +16,23 @@ class RecordsNew extends Component {
   constructor(props) {
     super(props)
     
-    this.gamesByName = this.props.games.map(game => game.title);
     this.state = this.getInitialState();
   }
 
+  componentWillReceiveProps(nextProps) {
+    const gamesByName = nextProps.games.map(game => game.title);
+    this.setState({
+      selectedGame: gamesByName[0],
+      selectedWorkType: 'DEV'
+    })
+  }
+
   getInitialState = () => {
+    const selectedGame = this.props.games[0] ? this.props.games[0].title : '';
+    
     return {
-      selectedGame: this.gamesByName[0],
-      selectedWorkType: this.props.workTypes[0],
+      selectedGame: selectedGame,
+      selectedWorkType: this.props.workTypes[0], 
       date: new Date().toLocaleDateString("en-GB"),
       person: '',
       hours: ''
@@ -61,6 +70,13 @@ class RecordsNew extends Component {
   }
 
   render() {
+    if (this.props.games.length === 0) {
+      return <div>Loading...</div>
+    }
+
+    const gamesByName = this.props.games.map(game => game.title);
+    console.log(this.state)
+    
     return (
       <Box align='center'
         pad={{"vertical": "medium"}}>
@@ -72,7 +88,7 @@ class RecordsNew extends Component {
           </Header>
           
           <FormField label='Game name'>
-            <Select options={this.gamesByName}
+            <Select options={gamesByName}
               value={this.state.selectedGame}
               onChange={this.onSelectGame}>
             </Select>
