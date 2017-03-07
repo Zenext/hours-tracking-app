@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import Box from 'grommet/components/Box';
 import Header from 'grommet/components/Header';
@@ -8,11 +10,24 @@ import Button from 'grommet/components/Button';
 import Tabs from 'grommet/components/Tabs';
 import Tab from 'grommet/components/Tab';
 
+import { fetchRecords } from '../actions/record';
 import { gameInfoTable } from '../components/GameInfoTable';
 
-export default class Game extends Component {
+class Game extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      records: []
+    };
+  }
+
+  componentDidMount() {
+    const records = this.props.fetchRecords(this.props.params.name);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({records: nextProps.records});
   }
 
   render() {
@@ -26,7 +41,7 @@ export default class Game extends Component {
 
        <Tabs>
          <Tab title='Total'>
-            {gameInfoTable()}
+            {gameInfoTable(this.state.records)}
          </Tab>
          <Tab title='By sprint'>
            Sprint
@@ -41,3 +56,15 @@ export default class Game extends Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    records: state.records
+  };
+};
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ fetchRecords }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);

@@ -15,8 +15,8 @@ class GamesContainer extends Component {
     dispatch(fetchGames());
   }
   
-  onGameSelected = (gameName) => {
-    browserHistory.push(`/games/${gameName}`)
+  onGameSelected = (id) => {
+    browserHistory.push(`/games/${id}`)
   }
   
   render() {
@@ -37,7 +37,7 @@ class GamesContainer extends Component {
             {this.props.games.map(game => {
               return (
                 <TableRow key={game.id}
-                  onClick={this.onGameSelected.bind(this, game.title)}>
+                  onClick={this.onGameSelected.bind(this, game.id)}>
                   <td>{game.title}</td>
                   <td>{game.abbrevation}</td>
                   <td>{game.start_date}</td>
@@ -56,6 +56,6 @@ function mapStateToProps(state) {
   return {
     games: state.games
   };
-}
+};
 
 export default connect(mapStateToProps)(GamesContainer);

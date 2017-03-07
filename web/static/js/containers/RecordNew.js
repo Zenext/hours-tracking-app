@@ -1,5 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { createRecord } from '../actions/record';
 
 import Box from 'grommet/components/Box';
 import Form from 'grommet/components/Form';
@@ -12,6 +15,8 @@ import DateTime from 'grommet/components/DateTime';
 import Footer from 'grommet/components/Footer';
 import Button from 'grommet/components/Button';
 
+const workTypes = ['Dev', 'QA', 'Art', 'PM']
+
 class RecordsNew extends Component {
   constructor(props) {
     super(props)
@@ -20,19 +25,18 @@ class RecordsNew extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const gamesByName = nextProps.games.map(game => game.title);
     this.setState({
-      selectedGame: gamesByName[0],
-      selectedWorkType: 'DEV'
+      selectedGame: nextProps.games[0],
+      selectedWorkType: 'Dev'
     })
   }
 
   getInitialState = () => {
-    const selectedGame = this.props.games[0] ? this.props.games[0].title : '';
+    const selectedGame = this.props.games[0] ? this.props.games[0] : {};
     
     return {
       selectedGame: selectedGame,
-      selectedWorkType: this.props.workTypes[0], 
+      selectedWorkType: workTypes[0], 
       date: new Date().toLocaleDateString("en-GB"),
       person: '',
       hours: ''
@@ -46,6 +50,7 @@ class RecordsNew extends Component {
   onFormSubmit = (event) => {
     event.preventDefault();
     
+    this.props.createRecord(this.state);
     this.setState(this.getInitialState());
   }
 
@@ -62,7 +67,8 @@ class RecordsNew extends Component {
   }
 
   onSelectGame = (event) => {
-    this.setState({selectedGame: event.value});
+    const gameObj = this.props.games.filter(game => game.title === event.value)[0];
+    this.setState({selectedGame: gameObj});
   }
 
   onSelectWorkType = (event) => {
@@ -88,13 +94,13 @@ class RecordsNew extends Component {
           
           <FormField label='Game name'>
             <Select options={gamesByName}
-              value={this.state.selectedGame}
+              value={this.state.selectedGame.title}
               onChange={this.onSelectGame}>
             </Select>
           </FormField>
           
           <FormField label='Type of work'>
-            <Select options={this.props.workTypes}
+            <Select options={workTypes}
               value={this.state.selectedWorkType}
               onChange={this.onSelectWorkType}>
             </Select>
@@ -129,9 +135,12 @@ class RecordsNew extends Component {
 
 function mapStateToProps(state) {
   return {
-    games: state.games,
-    workTypes: state.records.workTypes
+    games: state.games
   }
 }
 
-export default connect(mapStateToProps)(RecordsNew);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ createRecord }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecordsNew);

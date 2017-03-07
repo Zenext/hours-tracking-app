@@ -37,7 +37,17 @@ const renderTableBody = (values) => {
   )
 };
 
+const countDevHours = data => {
+  if (!data || data.length === 0) {
+    return;
+  }
+  
+  const devHours = data.filter(record => record.work_type === 'Dev');
+  return devHours.reduce((a, b) => a.hours + b.hours); 
+}
+
 const gameInfoTable = (options) => {
+  console.log(countDevHours(options))
   return (
     <Table>
       {renderTableHead(['Type', 'Hours', 'Days'])}

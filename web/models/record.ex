@@ -1,6 +1,11 @@
 defmodule Hours.Record do
   use Hours.Web, :model
 
+  alias Hours.Record
+  alias Hours.Repo
+  
+  import Ecto.Query, only: [from: 2]
+
   schema "records" do
     field :person_id, :integer
     field :game_id, :integer
@@ -13,7 +18,14 @@ defmodule Hours.Record do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name])
-    |> validate_required([:name])
+    |> cast(params, [:person_id, :game_id, :hours, :work_type, :date])
+    |> validate_required([:person_id, :game_id, :hours, :work_type, :date])
+  end
+
+  def get_by_game_id(id) do
+    query = from r in Record, where: r.game_id == ^id
+
+    query
+    |> Repo.all
   end
 end

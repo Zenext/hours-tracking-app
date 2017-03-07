@@ -2,15 +2,20 @@ defmodule Hours.RecordView do
   use Hours.Web, :view
 
   def render("index.json", %{records: records}) do
-    %{data: render_many(records, Hours.RecordView, "record.json")}
+    %{records: Enum.map(records, &record_json/1)}
   end
 
   def render("show.json", %{record: record}) do
-    %{data: render_one(record, Hours.RecordView, "record.json")}
+    %{record: record_json(record)}
   end
 
-  def render("record.json", %{record: record}) do
-    %{id: record.id,
-      name: record.name}
+  def record_json(record) do
+    %{
+      person_id: record.person_id,
+      id: record.id,
+      hours: record.hours,
+      work_type: record.work_type,
+      date: record.date
+    }
   end
 end
