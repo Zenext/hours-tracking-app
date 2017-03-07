@@ -112,6 +112,7 @@ class RecordsNew extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state)
   return {
     games: state.games,
     workTypes: state.records.workTypes

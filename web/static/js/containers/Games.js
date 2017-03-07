@@ -2,12 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
 
+import { fetchGames } from '../actions/game';
+
 import Box from 'grommet/components/Box';
 import Table from 'grommet/components/Table';
 import TableRow from 'grommet/components/TableRow';
 import Button from 'grommet/components/Button';
 
 class GamesContainer extends Component {
+  componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch(fetchGames());
+  }
+  
   onGameSelected = (gameName) => {
     browserHistory.push(`/games/${gameName}`)
   }
@@ -27,13 +34,13 @@ class GamesContainer extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.games.map(name => {
+            {this.props.games.map(game => {
               return (
-                <TableRow key={name}
-                  onClick={this.onGameSelected.bind(this, name)}>
-                  <td>{name}</td>
-                  <td>Abb</td>
-                  <td>03/03/2017</td>
+                <TableRow key={game.id}
+                  onClick={this.onGameSelected.bind(this, game.title)}>
+                  <td>{game.title}</td>
+                  <td>{game.abbrevation}</td>
+                  <td>{game.start_date}</td>
                 </TableRow>
               )
             })}

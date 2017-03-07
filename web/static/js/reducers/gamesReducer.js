@@ -1,9 +1,10 @@
-const initialState = ['Diamond Bonanza', 'Pirates Plunder', 'Triple Win Cafe', 'Fun of The Fair'];
-
-export default function(state = initialState, action) {
+export default function(state = [], action) {
   switch(action.type) {
     case 'CREATE_NEW_GAME':
-      return state = [...state, action.payload.title];
+      return [...state, action.payload.title];
+    case 'GAMES_DATA_RECEIVED':
+      console.log(action.payload)
+      return action.payload;
     default: return state
   }
 }
