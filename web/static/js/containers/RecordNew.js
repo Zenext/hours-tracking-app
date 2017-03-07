@@ -36,7 +36,6 @@ class RecordsNew extends Component {
   onFormSubmit = (event) => {
     event.preventDefault();
     
-    this.context.router.push("/records/new");
     this.setState(this.getInitialState());
   }
 
