@@ -16,12 +16,13 @@ class RecordsNew extends Component {
   constructor(props) {
     super(props)
     
+    this.gamesByName = this.props.games.map(game => game.title);
     this.state = this.getInitialState();
   }
 
   getInitialState = () => {
     return {
-      selectedGame: this.props.games[0],
+      selectedGame: this.gamesByName[0],
       selectedWorkType: this.props.workTypes[0],
       date: new Date().toLocaleDateString("en-GB"),
       person: '',
@@ -71,7 +72,7 @@ class RecordsNew extends Component {
           </Header>
           
           <FormField label='Game name'>
-            <Select options={this.props.games}
+            <Select options={this.gamesByName}
               value={this.state.selectedGame}
               onChange={this.onSelectGame}>
             </Select>
@@ -112,7 +113,6 @@ class RecordsNew extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state)
   return {
     games: state.games,
     workTypes: state.records.workTypes
