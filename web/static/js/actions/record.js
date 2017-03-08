@@ -39,7 +39,7 @@ export function fetchRecords(id) {
   return dispatch => {
     return axios.get(`/api/v1/records/${id}`, {params}) 
       .then(response => {
-        dispatch(recordsReceived(response.data.records));
+        dispatch(recordsReceived(response.data));
       });
   };
 };

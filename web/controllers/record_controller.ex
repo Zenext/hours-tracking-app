@@ -32,11 +32,11 @@ defmodule Hours.RecordController do
   end
 
   defp count_hours(records) do
-    work_types = ["Dev", "Art", "QA", "PM"]
-
     %{
-      dev_hours: count_hours(records, "Dev"),
-      art_hours: count_hours(records, "Art")
+      dev: count_hours(records, "Dev"),
+      art: count_hours(records, "Art"),
+      qa: count_hours(records, "QA"),
+      pm: count_hours(records, "PM")
     }
   end
 

@@ -18,7 +18,7 @@ class Game extends Component {
     super(props);
 
     this.state = {
-      records: []
+      hours: {}
     };
   }
 
@@ -27,7 +27,7 @@ class Game extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({records: nextProps.records});
+    this.setState({hours: nextProps.hours});
   }
 
   render() {
@@ -41,7 +41,7 @@ class Game extends Component {
 
        <Tabs>
          <Tab title='Total'>
-            {gameInfoTable(this.state.records)}
+            {gameInfoTable(this.state.hours)}
          </Tab>
          <Tab title='By sprint'>
            Sprint
@@ -59,7 +59,7 @@ class Game extends Component {
 
 function mapStateToProps(state) {
   return {
-    records: state.records
+    hours: state.records.hours
   };
 };
 
