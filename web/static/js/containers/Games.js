@@ -16,7 +16,7 @@ class GamesContainer extends Component {
   }
   
   onGameSelected = (id) => {
-    browserHistory.push(`/games/${id}`)
+    browserHistory.push(`/games/${id}`, [{x: 5}])
   }
   
   render() {

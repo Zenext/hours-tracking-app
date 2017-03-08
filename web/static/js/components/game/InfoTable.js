@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 
+import Box from 'grommet/components/Box';
 import Table from 'grommet/components/Table';
 import TableRow from 'grommet/components/TableRow';
 
@@ -23,13 +24,10 @@ const renderTableBody = (values) => {
       {values.map((value, index) => {
         return <TableRow key={index}>
           <td>
-            {value.type}
+            <u>{value.type}</u>
           </td>
           <td>
             {value.hours}
-          </td>
-          <td>
-            {value.days}
           </td>
         </TableRow>
       })}
@@ -37,21 +35,20 @@ const renderTableBody = (values) => {
   )
 };
 
-const gameInfoTable = (data) => {
-  console.log(data)
-  return (
-    <Table>
-      {renderTableHead(['Type', 'Hours', 'Days'])}
-      {renderTableBody([
-        {type: "Dev", hours: data.dev, days: 50},
-        {type: "Art", hours: data.art, days: 35},
-        {type: "QA", hours: data.qa, days: 14},
-        {type: "PM", hours: data.pm, days: 14},
-      ])}
-    </Table>
-  )
-};
-
-export {
-  gameInfoTable
+export default class InfoTable extends Component {
+  render() {
+    return (
+      <Box pad="large">
+        <Table>
+          {renderTableHead(['Type', 'Hours'])}
+          {renderTableBody([
+            {type: "Dev", hours: this.props.hours.dev},
+            {type: "Art", hours: this.props.hours.art},
+            {type: "QA", hours: this.props.hours.qa},
+            {type: "PM", hours: this.props.hours.pm},
+          ])}
+        </Table>  
+      </Box>
+    )
+  }
 }
