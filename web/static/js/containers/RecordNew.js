@@ -38,7 +38,6 @@ class RecordsNew extends Component {
       selectedGame: selectedGame,
       selectedWorkType: workTypes[0], 
       date: new Date().toLocaleDateString("en-GB"),
-      person: '',
       hours: ''
     };
   }
@@ -57,11 +56,7 @@ class RecordsNew extends Component {
   onDateFieldChange = (value) => {
     this.setState({date: value});
   }
-
-  onPersonFieldChange = (event) => {
-    this.setState({person: event.target.value});
-  }
-
+  
   onHoursFieldChange = (event) => {
     this.setState({hours: event.target.value});
   }
@@ -110,12 +105,6 @@ class RecordsNew extends Component {
             <DateTime format='D/M/YYYY'
               onChange={this.onDateFieldChange}
               value={this.state.date} />
-          </FormField>
-          
-          <FormField label="Person">
-            <TextInput name="person"
-              value={this.state.person}
-              onDOMChange={this.onPersonFieldChange} />
           </FormField>
           
           <FormField label="Hours">

@@ -11,7 +11,6 @@ defmodule Hours.RecordView do
 
   def record_json(record) do
     %{
-      person_id: record.person_id,
       id: record.id,
       hours: record.hours,
       work_type: record.work_type,

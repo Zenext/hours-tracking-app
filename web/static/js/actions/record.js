@@ -9,7 +9,6 @@ const recordCreated = data => {
 
 const adaptRecordData = data => {
   return {
-    person_id: data.person,
     game_id: data.selectedGame.id,
     hours: data.hours,
     work_type: data.selectedWorkType,
