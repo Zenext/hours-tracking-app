@@ -17,8 +17,8 @@ defmodule Hours.Router do
     pipe_through :api
 
     scope "/v1" do
-      resources "/games", GameController, only: [:index, :create]
-      resources "/records", RecordController, only: [:index, :create]
+      resources "/games", GameController, only: [:index, :create,]
+      resources "/records", RecordController, only: [:index, :create, :show]
     end
   end
   

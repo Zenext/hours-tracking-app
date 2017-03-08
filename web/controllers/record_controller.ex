@@ -7,9 +7,15 @@ defmodule Hours.RecordController do
 
   def index(conn, %{"game_id" => game_id}) do
     records = Record.get_by_game_id(game_id)    
-    dev_hours = countDevHours(records)
     
     render(conn, "index.json", records: records)
+  end
+
+  def show(conn, %{"game_id" => game_id}) do
+    records = Record.get_by_game_id(game_id)    
+    hours = count_hours(records)
+    
+    render(conn, "show.json",  hours: hours)
   end
 
   def create(conn, params) do
@@ -25,10 +31,21 @@ defmodule Hours.RecordController do
     end
   end
 
-  defp countDevHours(records) do
-    records
-    |> Enum.filter(fn(x) -> x.work_type == "Dev" end)  
-    |> Enum.reduce(fn(x, acc) -> x.hours + acc.hours end)
+  defp count_hours(records) do
+    work_types = ["Dev", "Art", "QA", "PM"]
+
+    %{
+      dev_hours: count_hours(records, "Dev"),
+      art_hours: count_hours(records, "Art")
+    }
   end
 
+  defp count_hours(records, type) do
+    {_total, hours} = 
+      records
+      |> Enum.filter(fn(x) -> x.work_type == type end)
+      |> Enum.map_reduce(0, fn(x, acc) -> {x.hours, x.hours + acc} end)
+
+    hours
   end
+end

@@ -37,7 +37,7 @@ const recordsReceived = data => {
 export function fetchRecords(id) {
   const params = {game_id: id};
   return dispatch => {
-    return axios.get('/api/v1/records', {params}) 
+    return axios.get(`/api/v1/records/${id}`, {params}) 
       .then(response => {
         dispatch(recordsReceived(response.data.records));
       });
