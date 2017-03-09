@@ -27,19 +27,24 @@ export function createRecord(data) {
   }
 };
 
-const recordsReceived = data => {
+const hoursReceived = data => {
   return {
-    type: 'RECORDS_RECEIVED',
+    type: 'HOURS_RECEIVED',
     payload: data
-  }
+  };
 };
 
-export function fetchRecords(id) {
-  const params = {game_id: id};
-  return dispatch => {
-    return axios.get(`/api/v1/records/${id}`, {params}) 
-      .then(response => {
-        dispatch(recordsReceived(response.data));
-      });
+export function fetchHours(gameId, startDate, endDate) {
+  const params = {
+    game_id: gameId,
+    start_date: startDate,
+    end_date: endDate
   };
+
+  return dispatch => {
+    return axios.get(`/api/v1/records/hours/${gameId}`, {params})
+      .then(response => {
+        dispatch(hoursReceived(response.data))
+      })
+  }
 };

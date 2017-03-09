@@ -11,13 +11,20 @@ defmodule Hours.RecordController do
     render(conn, "index.json", records: records)
   end
 
-  def show(conn, %{"game_id" => game_id}) do
+  def hours(conn, %{"game_id" => game_id, "start_date" => start_date, "end_date" => end_date}) do
+    records = Record.get_by_time_interval(game_id, start_date, end_date)
+    hours = count_hours(records)
+
+    render(conn, "show.json", hours: hours)
+  end
+  
+  def hours(conn, %{"game_id" => game_id}) do
     records = Record.get_by_game_id(game_id)    
     hours = count_hours(records)
     
     render(conn, "show.json",  hours: hours)
   end
-
+  
   def create(conn, params) do
     changeset = Record.changeset(%Record{}, params)
 

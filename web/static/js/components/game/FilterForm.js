@@ -10,11 +10,12 @@ import Button from 'grommet/components/Button';
 export default class FilterForm extends Component {
   render() {
     return (
-       <Box size="small">
+       <Box size="medium"
+        pad={{horizontal: "large"}}>
         <Label>Start date</Label>
         <FormField>
           <DateTime name="startDate"
-            format='D/M/YYYY'
+            format='DD/MM/YYYY'
             value={this.props.startDate}
             onChange={this.props.onStartDateChange} />
         </FormField>  
@@ -22,7 +23,7 @@ export default class FilterForm extends Component {
         <Label>End date</Label>
         <FormField>
           <DateTime name="endDate"
-            format='D/M/YYYY'
+            format='DD/MM/YYYY'
             value={this.props.endDate}
             onChange={this.props.onEndDateChange} />
         </FormField> 

@@ -10,7 +10,7 @@ defmodule Hours.Record do
     field :game_id, :integer
     field :hours, :integer
     field :work_type, :string
-    field :date, :string   
+    field :date, :date   
 
     timestamps()
   end
@@ -24,7 +24,16 @@ defmodule Hours.Record do
   def get_by_game_id(id) do
     query = from r in Record, where: r.game_id == ^id
 
-    query
-    |> Repo.all
+    query |> Repo.all
+  end
+
+  def get_by_time_interval(id, start_date, end_date) do
+    {:ok, start_date} = Ecto.Date.cast start_date
+    {:ok, end_date} = Ecto.Date.cast end_date
+
+    query = from r in Record,
+      where: r.game_id == ^id and r.date >= ^start_date and r.date <= ^end_date
+
+    query |> Repo.all
   end
 end

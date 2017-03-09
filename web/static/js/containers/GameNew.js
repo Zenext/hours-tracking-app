@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { createGame } from '../actions/game';
+import { createGame } from '../actions/games';
 import axios from 'axios';
 
 import Box from 'grommet/components/Box';
@@ -67,7 +67,7 @@ class GameNew extends Component {
             <TextInput onDOMChange={this.onAbbChange} />
           </FormField>
           <FormField label='Start date'>
-            <DateTime format='D/M/YYYY'
+            <DateTime format='DD/MM/YYYY'
               onChange={this.onDateChange}
               value={this.state.start_date} />
           </FormField>

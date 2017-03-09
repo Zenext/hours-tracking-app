@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import moment from 'moment';
 
 import Box from 'grommet/components/Box';
 import Heading from 'grommet/components/Heading';
@@ -8,7 +9,7 @@ import Section from 'grommet/components/Section';
 import Columns from 'grommet/components/Columns';
 import FilterForm from '../components/game/FilterForm';
 
-import { fetchRecords } from '../actions/record';
+import { fetchHours } from '../actions/record';
 import InfoTable from '../components/game/InfoTable';
 
 class Game extends Component {
@@ -16,17 +17,33 @@ class Game extends Component {
     super(props);
 
     this.state = {
-      startDate: "03/03/2017",
-      endDate: ""
+      gameId: 0,
+      title: '',
+      startDate: '',
+      endDate: ''
     };
   }
-
-  componentDidMount() {
-    const records = this.props.fetchRecords(this.props.params.name);
+  
+  componentWillReceiveProps = (nextProps) => {
+    if (this.props.games.length > 0) {
+      return;
+    }
+    
+    const id = parseInt(this.props.params.name);
+    const game = nextProps.games[id - 1];
+    
+    this.setState({
+      gameId: game.id,
+      title: game.title,
+      startDate: game.start_date,
+      endDate: new Date()
+    })
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({hours: nextProps.hours});
+  componentDidUpdate = (prevProps, prevState) => {
+    if (!this.props.hours) {
+      this.onUpdate();
+    }
   }
 
   onDateFieldChanged = (fieldName, value) => {
@@ -34,13 +51,11 @@ class Game extends Component {
   }
 
   onUpdate = () => {
-    console.log(this.state)
-    this.props.fetchRecords(this.props.params.name)
-  }
-
-  getGameName = () => {
-    const id = parseInt(this.props.params.name);
-    return this.props.games[id - 1].title;
+    const gameId = this.state.gameId;
+    const startDate = moment(this.state.startDate, "DD/MM/YYYY").format();
+    const endDate = moment(this.state.endDate, "DD/MM/YYYY").format();
+    
+    this.props.fetchHours(gameId, startDate, endDate);
   }
 
   render() {
@@ -54,7 +69,7 @@ class Game extends Component {
           pad="large"
           separator="bottom">
           <Heading>
-            {this.getGameName()}
+            {this.state.title}
           </Heading>
         </Box>
         
@@ -80,7 +95,7 @@ function mapStateToProps(state) {
 };
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchRecords }, dispatch);
+  return bindActionCreators({ fetchHours }, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

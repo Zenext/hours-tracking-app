@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
 
-import { fetchGames } from '../actions/game';
+import { fetchGames } from '../actions/games';
 
 import Box from 'grommet/components/Box';
 import Table from 'grommet/components/Table';
@@ -16,7 +16,7 @@ class GamesContainer extends Component {
   }
   
   onGameSelected = (id) => {
-    browserHistory.push(`/games/${id}`, [{x: 5}])
+    browserHistory.push(`/games/${id}`);
   }
   
   render() {

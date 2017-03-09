@@ -102,7 +102,7 @@ class RecordsNew extends Component {
           </FormField>
           
           <FormField label="Date">
-            <DateTime format='D/M/YYYY'
+            <DateTime format='DD/MM/YYYY'
               onChange={this.onDateFieldChange}
               value={this.state.date} />
           </FormField>
