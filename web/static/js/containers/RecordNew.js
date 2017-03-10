@@ -77,7 +77,7 @@ class RecordsNew extends Component {
 
   render() {
     if (this.props.games.length === 0) {
-      return <div>Loading...</div>
+      return null;
     }
 
     const gamesByName = this.props.games.map(game => game.title);

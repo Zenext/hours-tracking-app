@@ -51,7 +51,7 @@ class Game extends Component {
 
   render() {
     if (!this.props.hours) {
-      return <div>Loading...</div>
+      return null;
     }
     
     return (
