@@ -15,7 +15,8 @@ defmodule Hours.GameController do
   end
 
   def create(conn, params) do
-    changeset = Game.changeset(%Game{}, params)
+    {:ok, start_date} = Ecto.Date.cast params["start_date"]
+    changeset = Game.changeset(%Game{}, %{params | "start_date" => start_date})
     
     case Repo.insert(changeset) do
       {:ok, game} ->

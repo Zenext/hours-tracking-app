@@ -31,7 +31,7 @@ class Game extends Component {
     if (!game || this.state.title.length === 0) {
       this.setState({
         title: game.title,
-        startDate: game.start_date,
+        startDate: moment(game.start_date).format("DD/MM/YYYY"),
         endDate: new Date()
       });
     }

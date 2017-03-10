@@ -7,20 +7,9 @@ const recordCreated = data => {
   };
 }
 
-const adaptRecordData = data => {
-  return {
-    game_id: data.selectedGame.id,
-    hours: data.hours,
-    work_type: data.selectedWorkType,
-    date: data.date
-  };
-};
-
-export function createRecord(data) {
-  const newData = adaptRecordData(data);
-  
+export function createRecord(params) {
   return dispatch => {
-    return axios.post('/api/v1/records', newData)
+    return axios.post('/api/v1/records', params)
       .then(response => {
         dispatch(recordCreated(response.data.record));
       });

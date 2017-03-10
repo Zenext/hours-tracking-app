@@ -19,6 +19,7 @@ defmodule Hours.Record do
     struct
     |> cast(params, [:game_id, :hours, :work_type, :date])
     |> validate_required([:game_id, :hours, :work_type, :date])
+    |> IO.inspect
   end
 
   def get_all(id) do

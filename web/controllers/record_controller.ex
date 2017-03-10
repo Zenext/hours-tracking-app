@@ -28,7 +28,8 @@ defmodule Hours.RecordController do
   end
   
   def create(conn, params) do
-    changeset = Record.changeset(%Record{}, params)
+    {:ok, date} = Ecto.Date.cast params["date"]
+    changeset = Record.changeset(%Record{}, %{params | "date" => date})
 
     case Repo.insert(changeset) do
       {:ok, record} ->

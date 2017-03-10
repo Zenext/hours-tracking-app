@@ -1,7 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { createGame } from '../actions/games';
+import moment from 'moment';
 import axios from 'axios';
 
 import Box from 'grommet/components/Box';
@@ -24,17 +26,14 @@ class GameNew extends Component {
       start_date: new Date().toLocaleDateString("en-GB")
     };
   }
-  
-  static contextTypes = {
-    router: PropTypes.object
-  }
 
   onFormSubmit = (event) => {
     event.preventDefault();
+    const start_date = moment(this.state.start_date, "DD/MM/YYYY").format();
 
-    this.props.createGame(this.state)
+    this.props.createGame({...this.state, start_date})
       .then(() => {
-        this.context.router.push("/games");
+        browserHistory.push(`/games`);
       })
   }
 

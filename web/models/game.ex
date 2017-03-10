@@ -6,7 +6,7 @@ defmodule Hours.Game do
   schema "games" do
     field :title, :string
     field :abbrevation, :string
-    field :start_date, :string
+    field :start_date, :date
 
     timestamps()
   end
@@ -15,5 +15,6 @@ defmodule Hours.Game do
     struct
     |> cast(params, [:title, :start_date, :abbrevation])
     |> validate_required([:title, :start_date, :abbrevation])
+    |> IO.inspect
   end
 end

@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import moment from 'moment';
 
 import { createRecord } from '../actions/record';
 
@@ -42,14 +43,17 @@ class RecordsNew extends Component {
     };
   }
   
-  static contextTypes = {
-    router: PropTypes.object
-  }
-
   onFormSubmit = (event) => {
     event.preventDefault();
     
-    this.props.createRecord(this.state);
+    const params = {
+      game_id: this.state.selectedGame.id,
+      work_type: this.state.selectedWorkType,
+      date: moment(this.state.date, "DD/MM/YYYY").format(),
+      hours: this.state.hours
+    }
+    
+    this.props.createRecord(params);
     this.setState(this.getInitialState());
   }
 
