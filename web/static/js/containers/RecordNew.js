@@ -15,8 +15,9 @@ import TextInput from 'grommet/components/TextInput';
 import DateTime from 'grommet/components/DateTime';
 import Footer from 'grommet/components/Footer';
 import Button from 'grommet/components/Button';
+import { Notification } from 'react-notification';
 
-const workTypes = ['Dev', 'QA', 'Art', 'PM']
+const workTypes = ['Dev', 'Art', 'QA', 'PM']
 
 class RecordsNew extends Component {
   constructor(props) {
@@ -38,8 +39,8 @@ class RecordsNew extends Component {
     return {
       selectedGame: selectedGame,
       selectedWorkType: workTypes[0], 
-      date: new Date().toLocaleDateString("en-GB"),
-      hours: ''
+      date: moment().format("DD/MM/YYYY"),
+      hours: '',
     };
   }
   
@@ -53,8 +54,8 @@ class RecordsNew extends Component {
       hours: this.state.hours
     }
     
-    this.props.createRecord(params);
-    this.setState(this.getInitialState());
+    const resp = this.props.createRecord(params)
+      .then(response => this.setState({hours: ''}))
   }
 
   onDateFieldChange = (value) => {
@@ -90,7 +91,8 @@ class RecordsNew extends Component {
               Add record
             </Heading>
           </Header>
-          
+
+
           <FormField label='Game name'>
             <Select options={gamesByName}
               value={this.state.selectedGame.title}

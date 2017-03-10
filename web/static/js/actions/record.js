@@ -12,7 +12,8 @@ export function createRecord(params) {
     return axios.post('/api/v1/records', params)
       .then(response => {
         dispatch(recordCreated(response.data.record));
-      });
+        return response;
+      })
   }
 };
 
