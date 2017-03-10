@@ -9,7 +9,7 @@ import Section from 'grommet/components/Section';
 import Columns from 'grommet/components/Columns';
 import FilterForm from '../components/game/FilterForm';
 
-import { fetchHours } from '../actions/record';
+import { getTotalHours, getHoursByDate } from '../actions/record';
 import InfoTable from '../components/game/InfoTable';
 
 class Game extends Component {
@@ -17,32 +17,23 @@ class Game extends Component {
     super(props);
 
     this.state = {
-      gameId: 0,
+      gameId: parseInt(this.props.params.name),
       title: '',
       startDate: '',
       endDate: ''
     };
-  }
-  
-  componentWillReceiveProps = (nextProps) => {
-    if (this.props.games.length > 0) {
-      return;
-    }
-    
-    const id = parseInt(this.props.params.name);
-    const game = nextProps.games[id - 1];
-    
-    this.setState({
-      gameId: game.id,
-      title: game.title,
-      startDate: game.start_date,
-      endDate: new Date()
-    })
+
+    this.props.getTotalHours(this.state.gameId);
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
-    if (!this.props.hours) {
-      this.onUpdate();
+  componentWillReceiveProps(nextProps) {
+    const game = nextProps.game;
+    if (!game || this.state.title.length === 0) {
+      this.setState({
+        title: game.title,
+        startDate: game.start_date,
+        endDate: new Date()
+      });
     }
   }
 
@@ -55,7 +46,7 @@ class Game extends Component {
     const startDate = moment(this.state.startDate, "DD/MM/YYYY").format();
     const endDate = moment(this.state.endDate, "DD/MM/YYYY").format();
     
-    this.props.fetchHours(gameId, startDate, endDate);
+    this.props.getHoursByDate(gameId, startDate, endDate);
   }
 
   render() {
@@ -89,13 +80,13 @@ class Game extends Component {
 
 function mapStateToProps(state) {
   return {
-    games: state.games,
-    hours: state.records.hours
+    hours: state.records.hours,
+    game: state.records.game
   };
 };
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchHours }, dispatch);
+  return bindActionCreators({ getTotalHours, getHoursByDate }, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

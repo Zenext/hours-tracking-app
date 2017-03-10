@@ -4,9 +4,9 @@ defmodule Hours.RecordView do
   def render("index.json", %{records: records}) do
     %{records: Enum.map(records, &record_json/1)}
   end
-
-  def render("show.json", %{hours: hours}) do
-    %{hours: hours}
+  
+  def render("show.json", %{hours: hours, game: game}) do
+    %{hours: hours, game: game}
   end
 
   def render("show.json", %{record: record}) do

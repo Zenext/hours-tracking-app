@@ -1,28 +1,30 @@
 defmodule Hours.RecordController do
   use Hours.Web, :controller
 
-  alias Hours.Record
+  alias Hours.{Record, Game}
 
-  import Record, only: [get_by_game_id: 1]
+  import Record
 
   def index(conn, %{"game_id" => game_id}) do
-    records = Record.get_by_game_id(game_id)    
+    records = Record.get_all(game_id)    
     
     render(conn, "index.json", records: records)
   end
 
   def hours(conn, %{"game_id" => game_id, "start_date" => start_date, "end_date" => end_date}) do
+    game = Repo.get(Game, game_id)
     records = Record.get_by_time_interval(game_id, start_date, end_date)
     hours = count_hours(records)
 
-    render(conn, "show.json", hours: hours)
+    render(conn, "show.json", hours: hours, game: game)
   end
-  
+
   def hours(conn, %{"game_id" => game_id}) do
-    records = Record.get_by_game_id(game_id)    
+    game = Repo.get(Game, game_id)
+    records = Record.get_all(game_id)
     hours = count_hours(records)
-    
-    render(conn, "show.json",  hours: hours)
+
+    render(conn, "show.json", hours: hours, game: game)
   end
   
   def create(conn, params) do

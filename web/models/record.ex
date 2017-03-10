@@ -21,7 +21,7 @@ defmodule Hours.Record do
     |> validate_required([:game_id, :hours, :work_type, :date])
   end
 
-  def get_by_game_id(id) do
+  def get_all(id) do
     query = from r in Record, where: r.game_id == ^id
 
     query |> Repo.all

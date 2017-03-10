@@ -34,17 +34,27 @@ const hoursReceived = data => {
   };
 };
 
-export function fetchHours(gameId, startDate, endDate) {
+const fetchHours = (params) => {
+  return dispatch => {
+    return axios.get(`/api/v1/records/hours/${params.game_id}`, {params: params})
+      .then(response => {
+        dispatch(hoursReceived(response.data))
+      })
+  }
+}
+
+export function getTotalHours(gameId) {
+  const params = {game_id: gameId};
+
+  return fetchHours(params);
+}
+
+export function getHoursByDate(gameId, startDate, endDate) {
   const params = {
     game_id: gameId,
     start_date: startDate,
     end_date: endDate
   };
 
-  return dispatch => {
-    return axios.get(`/api/v1/records/hours/${gameId}`, {params})
-      .then(response => {
-        dispatch(hoursReceived(response.data))
-      })
-  }
-};
+  return fetchHours(params);
+}
