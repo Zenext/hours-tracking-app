@@ -11,9 +11,6 @@ const renderMenu = () => {
     <Box flex='grow'
       justify='start'>
       <Menu primary={true}>
-        <Anchor>
-          Home
-        </Anchor>
         <Anchor path="/games">
           Games
         </Anchor>

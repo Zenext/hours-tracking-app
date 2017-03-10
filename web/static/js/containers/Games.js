@@ -31,7 +31,7 @@ class GamesContainer extends Component {
             <tr>
               <th><b>Name</b></th>
               <th><b>Abb</b></th>
-              <th><b>Start Date</b></th>
+              <th><b>Start Date(D/M/Y)</b></th>
             </tr>
           </thead>
           <tbody>
