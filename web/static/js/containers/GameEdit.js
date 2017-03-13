@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { browserHistory } from 'react-router';
 import moment from 'moment';
 
 import Box from 'grommet/components/Box';
@@ -22,8 +23,7 @@ class GameEdit extends Component {
     this.state = {
       id: this.props.params.name,
       title: '',
-      abbrevation: '',
-      start_date: ''
+      abbrevation: ''
     }
 
     this.props.fetchGame(this.state.id);
@@ -33,17 +33,19 @@ class GameEdit extends Component {
     const game = nextProps.game;
     this.setState({
       title: game.title,
-      abbrevation: game.abbrevation,
-      start_date: game.start_date
+      abbrevation: game.abbrevation
     })
   }
 
-  onFormSubmit = () => {
-    const start_date = moment(this.state.start_date, "DD/MM/YYYY").format();
-    this.props.updateGame(this.props.game.id, {
-      ...this.state,
-      start_date
-    });
+  onFormSubmit = (event) => {
+    event.preventDefault();
+    
+    this.props.updateGame(this.props.game.id, this.state)
+      .then(this.onGameUpdated);
+  }
+
+  onGameUpdated = () => {
+    browserHistory.push("/games");
   }
 
   onGameTitleChange = event => {
@@ -52,10 +54,6 @@ class GameEdit extends Component {
 
   onAbbChange = event => {
     this.setState({abbrevation: event.target.value});
-  }
-
-  onDateChange = value => {
-    this.setState({start_date: value});
   }
 
   render() {
@@ -79,11 +77,6 @@ class GameEdit extends Component {
           <FormField label='Abbrevation'>
             <TextInput onDOMChange={this.onAbbChange}
               value={this.state.abbrevation}/>
-          </FormField>
-          <FormField label='Start date'>
-            <DateTime format='DD/MM/YYYY'
-              onChange={this.onDateChange}
-              value={this.state.start_date} />
           </FormField>
           <Footer pad={{"vertical": "medium"}}>
             <Button onClick={this.onFormSubmit} label='Add' type='submit' primary={true} />

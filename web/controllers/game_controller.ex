@@ -15,11 +15,10 @@ defmodule Hours.GameController do
   end
 
   def update(conn, params) do
-    %{"id" => id, "start_date" => start_date} = params
-    {:ok, start_date} = Ecto.Date.cast start_date
+    %{"id" => id} = params
     
     game = Repo.get!(Game, id)
-    changeset = Game.changeset(game, %{params | "start_date" => start_date})
+    changeset = Game.changeset(game, params)
 
     case Repo.update(changeset) do
       {:ok, game} ->

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
-
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 import { createRecord } from '../actions/record';
 
 import Box from 'grommet/components/Box';
@@ -55,7 +55,17 @@ class RecordsNew extends Component {
     }
     
     const resp = this.props.createRecord(params)
-      .then(response => this.setState({hours: ''}))
+      .then(this.onRecordAdded)
+      .catch(this.onError);
+  }
+
+  onRecordAdded = response => {
+    this.setState({hours: ''});
+    NotificationManager.success("Record added", '', 2000);
+  }
+
+  onError = response => {
+    NotificationManager.error("Try again", "Error Occured", 2000);
   }
 
   onDateFieldChange = (value) => {
@@ -123,6 +133,8 @@ class RecordsNew extends Component {
             <Button onClick={this.onFormSubmit} label='Add' type='submit' primary={true} />
           </Footer>
         </Form>
+
+        <NotificationContainer />
       </Box>
     )
   }
