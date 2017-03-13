@@ -4,9 +4,12 @@ defmodule Hours.GameController do
   alias Hours.Game
 
   def index(conn, _params) do
-    games = Repo.all(Game)
+    games = 
+      Game
+      |> Game.order_by_date
+      |> Repo.all
    
-    render conn, "index.json", games: games
+    render(conn, "index.json", games: games)
   end
 
   def show(conn, %{"id" => id}) do

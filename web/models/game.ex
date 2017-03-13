@@ -15,6 +15,9 @@ defmodule Hours.Game do
     struct
     |> cast(params, [:title, :start_date, :abbrevation])
     |> validate_required([:title, :start_date, :abbrevation])
-    |> IO.inspect
+  end
+
+  def order_by_date(query) do
+    order_by(query, [g], desc: g.start_date)
   end
 end
