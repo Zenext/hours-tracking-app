@@ -27,6 +27,7 @@ class RecordsNew extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
+      games: nextProps.games,
       selectedGame: nextProps.games[0],
       selectedWorkType: 'Dev'
     })
@@ -36,6 +37,7 @@ class RecordsNew extends Component {
     const selectedGame = this.props.games[0] ? this.props.games[0] : {};
     
     return {
+      games: [],
       selectedGame: selectedGame,
       selectedWorkType: workTypes[0], 
       date: new Date().toLocaleDateString("en-GB"),
@@ -80,6 +82,23 @@ class RecordsNew extends Component {
     this.setState({selectedGame: gameObj});
   }
 
+  onGameSearch = (event) => {
+    if (event.target.value.length === 0) {
+      this.setState({games: this.props.games});
+      return;
+    }
+    
+    const games = this.state.games.filter(game => {
+      return game.title.includes(event.target.value);
+    });
+
+    if (games.length === 0) {
+      return;
+    }
+    
+    this.setState({games});
+  }
+
   onSelectWorkType = (event) => {
     this.setState({selectedWorkType: event.value});
   }
@@ -89,7 +108,7 @@ class RecordsNew extends Component {
       return null;
     }
 
-    const gamesByName = this.props.games.map(game => game.title);
+    const gamesByName = this.state.games.map(game => game.title);
     
     return (
       <Box align='center'
@@ -105,7 +124,8 @@ class RecordsNew extends Component {
           <FormField label='Game name'>
             <Select options={gamesByName}
               value={this.state.selectedGame.title}
-              onChange={this.onSelectGame}>
+              onChange={this.onSelectGame}
+              onSearch={this.onGameSearch}>
             </Select>
           </FormField>
           
