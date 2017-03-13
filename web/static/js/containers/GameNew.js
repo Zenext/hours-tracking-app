@@ -31,9 +31,16 @@ class GameNew extends Component {
     const start_date = this.state.start_date;
 
     this.props.createGame({...this.state, start_date})
-      .then(() => {
-        browserHistory.push(`/games`);
-      })
+      .then(this.onGameCreated)
+      .catch(this.onError);
+  }
+
+  onGameCreated = () => {
+    browserHistory.push(`/games`);
+  }
+
+  onError = response => {
+    console.log(response)
   }
 
   onGameTitleChange = (event) => {

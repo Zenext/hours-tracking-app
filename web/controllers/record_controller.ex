@@ -37,8 +37,8 @@ defmodule Hours.RecordController do
         conn
         |> put_status(:created)
         |> render("show.json", record: record)
-      {:error, _record} ->
-        render(conn, "show.json")
+      {:error, changeset} ->
+        render(conn, "error.json", changeset: changeset)
     end
   end
 

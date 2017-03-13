@@ -2,6 +2,8 @@ defmodule Hours.GameController do
   use Hours.Web, :controller
 
   alias Hours.Game
+  
+  import Hours.TimexHelpers, only: [to_db_format: 1]
 
   def index(conn, _params) do
     games = 
@@ -34,8 +36,7 @@ defmodule Hours.GameController do
   end
 
   def create(conn, params) do
-    {:ok, date} = Timex.parse(params["start_date"], "{0D}/{0M}/{YYYY}")
-    {:ok, date} = Ecto.Date.cast date
+    date = to_db_format(params["start_date"])
     changeset = Game.changeset(%Game{}, %{params | "start_date" => date})
     
     case Repo.insert(changeset) do
@@ -43,8 +44,8 @@ defmodule Hours.GameController do
         conn
         |> put_status(:created)
         |> render("show.json", game: game)
-      {:error, _changeset} ->
-        render(conn, "show.json")
+      {:error, changeset} ->
+        render(conn, "error.json", changeset: changeset)
     end
   end
 end

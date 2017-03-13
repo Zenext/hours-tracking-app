@@ -29,7 +29,7 @@ class Game extends Component {
 
   componentWillReceiveProps(nextProps) {
     const game = nextProps.game;
-    console.log(game)
+    
     if (!game || this.state.title.length === 0) {
       this.setState({
         title: game.title,
