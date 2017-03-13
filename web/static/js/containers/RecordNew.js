@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import moment from 'moment';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import { createRecord } from '../actions/record';
 
@@ -39,7 +38,7 @@ class RecordsNew extends Component {
     return {
       selectedGame: selectedGame,
       selectedWorkType: workTypes[0], 
-      date: moment().format("DD/MM/YYYY"),
+      date: new Date().toLocaleDateString("en-GB"),
       hours: '',
     };
   }
@@ -50,7 +49,7 @@ class RecordsNew extends Component {
     const params = {
       game_id: this.state.selectedGame.id,
       work_type: this.state.selectedWorkType,
-      date: moment(this.state.date, "DD/MM/YYYY").format(),
+      date: this.state.date,
       hours: this.state.hours
     }
     

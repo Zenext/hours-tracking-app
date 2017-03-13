@@ -4,6 +4,7 @@ defmodule Hours.RecordController do
   alias Hours.{Record, Game}
 
   import Record
+  import Hours.TimexHelpers, only: [to_db_format: 1]
 
   def index(conn, %{"game_id" => game_id}) do
     records = Record.get_all(game_id)    
@@ -28,7 +29,7 @@ defmodule Hours.RecordController do
   end
   
   def create(conn, params) do
-    {:ok, date} = Ecto.Date.cast params["date"]
+    date = to_db_format(params["date"])
     changeset = Record.changeset(%Record{}, %{params | "date" => date})
 
     case Repo.insert(changeset) do

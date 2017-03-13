@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
-import moment from 'moment';
 
 import Box from 'grommet/components/Box';
 import Heading from 'grommet/components/Heading';
@@ -30,11 +29,12 @@ class Game extends Component {
 
   componentWillReceiveProps(nextProps) {
     const game = nextProps.game;
+    console.log(game)
     if (!game || this.state.title.length === 0) {
       this.setState({
         title: game.title,
-        startDate: moment(game.start_date).format("DD/MM/YYYY"),
-        endDate: new Date()
+        startDate: game.start_date,
+        endDate: new Date().toLocaleDateString("en-GB")
       });
     }
   }
@@ -45,8 +45,8 @@ class Game extends Component {
 
   onUpdate = () => {
     const gameId = this.state.gameId;
-    const startDate = moment(this.state.startDate, "DD/MM/YYYY").format();
-    const endDate = moment(this.state.endDate, "DD/MM/YYYY").format();
+    const startDate = this.state.startDate;
+    const endDate = this.state.endDate;
     
     this.props.getHoursByDate(gameId, startDate, endDate);
   }

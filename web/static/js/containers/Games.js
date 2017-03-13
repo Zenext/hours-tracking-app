@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
-import moment from 'moment';
 
 import { fetchGames } from '../actions/games';
 
@@ -41,7 +40,7 @@ class GamesContainer extends Component {
                   onClick={this.onGameSelected.bind(this, game.id)}>
                   <td>{game.title}</td>
                   <td>{game.abbrevation}</td>
-                  <td>{moment(game.start_date).format("DD/MM/YYYY")}</td>
+                  <td>{game.start_date}</td>
                 </TableRow>
               )
             })}

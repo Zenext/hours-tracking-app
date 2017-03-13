@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { createGame } from '../actions/games';
-import moment from 'moment';
 import axios from 'axios';
 
 import Box from 'grommet/components/Box';
@@ -29,7 +28,7 @@ class GameNew extends Component {
 
   onFormSubmit = (event) => {
     event.preventDefault();
-    const start_date = moment(this.state.start_date, "DD/MM/YYYY").format();
+    const start_date = this.state.start_date;
 
     this.props.createGame({...this.state, start_date})
       .then(() => {

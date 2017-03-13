@@ -34,8 +34,9 @@ defmodule Hours.GameController do
   end
 
   def create(conn, params) do
-    {:ok, start_date} = Ecto.Date.cast params["start_date"]
-    changeset = Game.changeset(%Game{}, %{params | "start_date" => start_date})
+    {:ok, date} = Timex.parse(params["start_date"], "{0D}/{0M}/{YYYY}")
+    {:ok, date} = Ecto.Date.cast date
+    changeset = Game.changeset(%Game{}, %{params | "start_date" => date})
     
     case Repo.insert(changeset) do
       {:ok, game} ->

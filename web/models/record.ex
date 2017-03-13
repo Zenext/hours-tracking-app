@@ -5,6 +5,7 @@ defmodule Hours.Record do
   alias Hours.Repo
   
   import Ecto.Query, only: [from: 2]
+  import Hours.TimexHelpers, only: [to_db_format: 1]
 
   schema "records" do
     field :game_id, :integer
@@ -19,7 +20,6 @@ defmodule Hours.Record do
     struct
     |> cast(params, [:game_id, :hours, :work_type, :date])
     |> validate_required([:game_id, :hours, :work_type, :date])
-    |> IO.inspect
   end
 
   def get_all(id) do
@@ -29,8 +29,8 @@ defmodule Hours.Record do
   end
 
   def get_by_time_interval(id, start_date, end_date) do
-    {:ok, start_date} = Ecto.Date.cast start_date
-    {:ok, end_date} = Ecto.Date.cast end_date
+    start_date = to_db_format(start_date)
+    end_date = to_db_format(end_date)
 
     query = from r in Record,
       where: r.game_id == ^id and r.date >= ^start_date and r.date <= ^end_date

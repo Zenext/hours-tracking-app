@@ -1,12 +1,14 @@
 defmodule Hours.RecordView do
   use Hours.Web, :view
 
+  import Hours.GameView, only: [game_json: 1]
+
   def render("index.json", %{records: records}) do
     %{records: Enum.map(records, &record_json/1)}
   end
   
   def render("show.json", %{hours: hours, game: game}) do
-    %{hours: hours, game: game}
+    %{hours: hours, game: game_json(game)}
   end
 
   def render("show.json", %{record: record}) do
