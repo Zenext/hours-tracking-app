@@ -1,8 +1,9 @@
 import axios from 'axios';
+import Constants from '../constants';
 
 const gameReceived = data => {
   return {
-    type: 'GAME_DATA_RECEIVED',
+    type: Constants.GAME_DATA_RECEIVED,
     payload: data
   }
 }

@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+import Constants from '../constants';
+
 const recordCreated = data => {
   return {
-    type: 'RECORD_CREATED',
+    type: Constants.RECORD_CREATED,
     payload: data
   };
 }
@@ -19,7 +21,7 @@ export function createRecord(params) {
 
 const hoursReceived = data => {
   return {
-    type: 'HOURS_RECEIVED',
+    type: Constants.HOURS_RECEIVED,
     payload: data
   };
 };

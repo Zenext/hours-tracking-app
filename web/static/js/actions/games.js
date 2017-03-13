@@ -1,15 +1,16 @@
 import axios from 'axios';
+import Constants from '../constants';
 
 const gameCreated = data => {
   return {
-    type: 'CREATE_NEW_GAME',
+    type: Constants.CREATE_NEW_GAME,
     payload: data
   };
 };
 
 const gamesReceived = data => {
   return {
-    type: 'GAMES_DATA_RECEIVED',
+    type: Constants.GAMES_DATA_RECEIVED,
     payload: data
   }
 };
