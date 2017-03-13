@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router';
 import moment from 'moment';
 
 import Box from 'grommet/components/Box';
@@ -8,6 +9,7 @@ import Heading from 'grommet/components/Heading';
 import Section from 'grommet/components/Section';
 import Columns from 'grommet/components/Columns';
 import FilterForm from '../components/game/FilterForm';
+import EditIcon from 'grommet/components/icons/base/Edit';
 
 import { getTotalHours, getHoursByDate } from '../actions/record';
 import InfoTable from '../components/game/InfoTable';
@@ -60,7 +62,10 @@ class Game extends Component {
           pad="large"
           separator="bottom">
           <Heading>
-            {this.state.title}
+            {this.state.title}&ensp;
+            <Link to={`/games/${this.state.gameId}/edit`}>
+              <EditIcon />
+            </Link>
           </Heading>
         </Box>
         
