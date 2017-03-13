@@ -37,7 +37,7 @@ class RecordsNew extends Component {
     const selectedGame = this.props.games[0] ? this.props.games[0] : {};
     
     return {
-      games: [],
+      games: this.props.games || [],
       selectedGame: selectedGame,
       selectedWorkType: workTypes[0], 
       date: new Date().toLocaleDateString("en-GB"),
