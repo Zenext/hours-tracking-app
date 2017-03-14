@@ -74,9 +74,11 @@ class RecordsNew extends Component {
   
   onHoursFieldChange = (event) => {
     let value = event.target.value;
-    if (value > 24) {
+    if (value.length === 0) {
+      value = "";
+    } else if (parseInt(value) > 24) {
       value = 24;
-    } else if (value < 1) {
+    } else if (parseInt(value) < 1) {
       value = 1
     }
     
