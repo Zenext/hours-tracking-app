@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
-import gamesReducer from './gamesReducer';
-import recordsReducer from './recordsReducer';
+import games from './games';
+import records from './records';
 import currentGame from './currentGame';
 
 const rootReducer = combineReducers({
   currentGame,
-  games: gamesReducer,
-  records: recordsReducer
+  games,
+  records
 })
 
 export default rootReducer;
