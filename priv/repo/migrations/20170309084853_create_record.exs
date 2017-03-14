@@ -3,14 +3,15 @@ defmodule Hours.Repo.Migrations.CreateRecord do
 
   def change do
     create table(:records) do
-      add :person_id, :integer
       add :game_id, :integer
       add :hours, :integer
       add :work_type, :string
-      add :date, :string
+      add :date, :date
 
       timestamps
     end
 
   end
 end
+
+
