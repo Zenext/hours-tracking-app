@@ -10,7 +10,7 @@ import Header from 'grommet/components/Header';
 import Heading from 'grommet/components/Heading';
 import Select from 'grommet/components/Select';
 import FormField from 'grommet/components/FormField';
-import TextInput from 'grommet/components/TextInput';
+import NumberInput from 'grommet/components/NumberInput';
 import DateTime from 'grommet/components/DateTime';
 import Footer from 'grommet/components/Footer';
 import Button from 'grommet/components/Button';
@@ -74,7 +74,14 @@ class RecordsNew extends Component {
   }
   
   onHoursFieldChange = (event) => {
-    this.setState({hours: event.target.value});
+    let value = event.target.value;
+    if (value > 24) {
+      value = 24;
+    } else if (value < 1) {
+      value = 1
+    }
+    
+    this.setState({hours: value});
   }
 
   onSelectGame = (event) => {
@@ -143,9 +150,11 @@ class RecordsNew extends Component {
           </FormField>
           
           <FormField label="Hours">
-            <TextInput name="hours"
+            <NumberInput name="hours"
+              max={24}
+              min={1}
               value={this.state.hours}
-              onDOMChange={this.onHoursFieldChange} />
+              onChange={this.onHoursFieldChange} />
           </FormField>
           
           <Footer pad={{"vertical": "medium"}}>
