@@ -79,7 +79,7 @@ class GameEdit extends Component {
               value={this.state.abbrevation}/>
           </FormField>
           <Footer pad={{"vertical": "medium"}}>
-            <Button onClick={this.onFormSubmit} label='Add' type='submit' primary={true} />
+            <Button onClick={this.onFormSubmit} label='Update' type='submit' primary={true} />
             <Box pad={{"horizontal": "medium"}}>
               <Button path={`/games/${this.props.game.id}`} label='Cancel' type='button' />
             </Box>
