@@ -14,7 +14,6 @@ import NumberInput from 'grommet/components/NumberInput';
 import DateTime from 'grommet/components/DateTime';
 import Footer from 'grommet/components/Footer';
 import Button from 'grommet/components/Button';
-import { Notification } from 'react-notification';
 
 const workTypes = ['Dev', 'Art', 'QA', 'PM']
 
@@ -61,8 +60,8 @@ class RecordsNew extends Component {
   }
 
   onRecordAdded = response => {
+    NotificationManager.success(`${this.state.hours} hours`, "Record added", 2500);
     this.setState({hours: ''});
-    NotificationManager.success("Record added", '', 2000);
   }
 
   onError = response => {
