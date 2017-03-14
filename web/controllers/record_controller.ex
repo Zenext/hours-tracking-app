@@ -45,7 +45,8 @@ defmodule Hours.RecordController do
   defp count_hours(records) do
     %{
       dev: count_hours(records, "Dev"),
-      art: count_hours(records, "Art"),
+      design: count_hours(records, "Design"),
+      animations: count_hours(records, "Animations"),
       qa: count_hours(records, "QA"),
       pm: count_hours(records, "PM")
     }

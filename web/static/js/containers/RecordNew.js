@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { NotificationManager } from 'react-notifications';
 import { createRecord } from '../actions/record';
+import workTypes from '../constants/workTypes';
 
 import Box from 'grommet/components/Box';
 import Form from 'grommet/components/Form';
@@ -15,7 +16,6 @@ import DateTime from 'grommet/components/DateTime';
 import Footer from 'grommet/components/Footer';
 import Button from 'grommet/components/Button';
 
-const workTypes = ['Dev', 'Art', 'QA', 'PM']
 
 class RecordsNew extends Component {
   constructor(props) {
@@ -60,7 +60,7 @@ class RecordsNew extends Component {
   }
 
   onRecordAdded = response => {
-    NotificationManager.success(`${this.state.hours} hours`, "Record added", 2500);
+    NotificationManager.success(`${this.state.hours} hours`, "Record added", 2000);
     this.setState({hours: ''});
   }
 
@@ -161,7 +161,6 @@ class RecordsNew extends Component {
           </Footer>
         </Form>
 
-        <NotificationContainer />
       </Box>
     )
   }

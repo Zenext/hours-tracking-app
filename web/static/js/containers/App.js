@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NotificationContainer } from 'react-notifications';
 
 import App from 'grommet/components/App';
 import Split from 'grommet/components/Split';
@@ -13,6 +14,7 @@ export default class Application extends Component {
           <Sidebar />
           <Box>
             {this.props.children}
+            <NotificationContainer />
           </Box>
         </Split>
       </App>

@@ -43,7 +43,9 @@ export default class InfoTable extends Component {
           {renderTableHead(['Type', 'Hours'])}
           {renderTableBody([
             {type: "Dev", hours: this.props.hours.dev},
-            {type: "Art", hours: this.props.hours.art},
+            {type: "Design", hours: this.props.hours.design},
+            {type: "Animations", hours: this.props.hours.animations},
+            {type: "Art Total", hours: this.props.hours.design + this.props.hours.animations},
             {type: "QA", hours: this.props.hours.qa},
             {type: "PM", hours: this.props.hours.pm},
           ])}
