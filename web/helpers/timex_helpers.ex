@@ -1,7 +1,7 @@
 defmodule Hours.TimexHelpers do
   use Timex
 
-  def to_db_format(date) do
+  def to_date(date) do
     {:ok, date} = Timex.parse(date, "{0D}/{0M}/{YYYY}")
     {:ok, date} = Ecto.Date.cast date
 

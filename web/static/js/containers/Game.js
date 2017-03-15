@@ -56,7 +56,6 @@ class Game extends Component {
     if (!this.props.hours) {
       return null;
     }
-    console.log(this.props.hours.qa)
     
     return (
       <Box>

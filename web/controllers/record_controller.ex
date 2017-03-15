@@ -3,7 +3,7 @@ defmodule Hours.RecordController do
 
   alias Hours.Record
   
-  import Hours.TimexHelpers, only: [to_db_format: 1]
+  import Hours.TimexHelpers, only: [to_date: 1]
 
   def index(conn, _params) do
     records = Record.all() |> Repo.all    
@@ -29,7 +29,7 @@ defmodule Hours.RecordController do
   end
   
   def create(conn, params) do
-    date = to_db_format(params["date"])
+    date = to_date(params["date"])
     changeset = Record.changeset(%Record{}, %{params | "date" => date})
 
     case Repo.insert(changeset) do

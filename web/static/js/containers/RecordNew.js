@@ -66,6 +66,7 @@ class RecordsNew extends Component {
 
   onError = response => {
     NotificationManager.error("Try again", "Error Occured", 2000);
+    throw new Error(response);
   }
 
   onDateFieldChange = (value) => {

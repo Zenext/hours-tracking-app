@@ -4,7 +4,7 @@ defmodule Hours.Record do
   @derive {Poison.Encoder, only: [:game_id, :hours, :work_type, :date]}
   alias Hours.{Repo, Record, Game}
 
-  import Hours.TimexHelpers, only: [to_db_format: 1]
+  import Hours.TimexHelpers, only: [to_date: 1]
 
   schema "records" do
     field :hours, :integer
@@ -33,8 +33,8 @@ defmodule Hours.Record do
   end
 
   def by_time_interval(query, start_date, end_date) do
-    start_date = to_db_format(start_date)
-    end_date = to_db_format(end_date)
+    start_date = to_date(start_date)
+    end_date = to_date(end_date)
     
     query
       |> where([r], r.date >= ^start_date and r.date <= ^end_date)
