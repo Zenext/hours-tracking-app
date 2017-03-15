@@ -15,15 +15,20 @@ defmodule Hours.GameController do
   end
 
   def show(conn, %{"id" => id}) do
-    game = Repo.get!(Game, id)
+    game = Game
+      |> Game.by_id(id)
+      |> Repo.one
+      
     render(conn, "show.json", game: game)
   end
 
   def update(conn, params) do
     %{"id" => id} = params
     
-    game = Repo.get!(Game, id)
-    changeset = Game.changeset(game, params)
+    changeset = Game
+      |> Game.by_id(id)
+      |> Repo.one
+      |> Game.changeset(params)
 
     case Repo.update(changeset) do
       {:ok, game} ->
@@ -38,7 +43,7 @@ defmodule Hours.GameController do
   def create(conn, params) do
     date = to_db_format(params["start_date"])
     changeset = Game.changeset(%Game{}, %{params | "start_date" => date})
-    
+   
     case Repo.insert(changeset) do
       {:ok, game} ->
         conn

@@ -28,7 +28,7 @@ const hoursReceived = data => {
 
 const fetchHours = (params) => {
   return dispatch => {
-    return axios.get(`/api/v1/records/hours/${params.game_id}`, {params: params})
+    return axios.get(`/api/v1/records/hours`, {params: params})
       .then(response => {
         dispatch(hoursReceived(response.data))
       })

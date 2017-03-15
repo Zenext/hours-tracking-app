@@ -40,7 +40,7 @@ class GameNew extends Component {
   }
 
   onError = response => {
-    console.log(response)
+    throw new Error(response)
   }
 
   onGameTitleChange = (event) => {

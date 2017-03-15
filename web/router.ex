@@ -18,9 +18,8 @@ defmodule Hours.Router do
 
     scope "/v1" do
       resources "/games", GameController
-
-      post "/records", RecordController, :create
-      get "/records/hours/:id", RecordController, :hours
+      resources "/records", RecordController, only: [:create, :index]
+      get "/records/hours", RecordController, :hours
     end
   end
   

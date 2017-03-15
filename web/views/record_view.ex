@@ -1,18 +1,18 @@
 defmodule Hours.RecordView do
   use Hours.Web, :view
 
-  import Hours.GameView, only: [game_json: 1]
+  alias Hours.GameView
 
   def render("index.json", %{records: records}) do
     %{records: Enum.map(records, &record_json/1)}
   end
-  
-  def render("show.json", %{hours: hours, game: game}) do
-    %{hours: hours, game: game_json(game)}
+
+  def render("hours.json", %{records: records}) do
+    %{records: Enum.map(records, &record_json/1), hours: count_hours(records)}
   end
 
   def render("show.json", %{record: record}) do
-    %{record: record_json(record)}
+    record
   end
   
   def render("error.json", %{changeset: changeset}) do
@@ -30,5 +30,24 @@ defmodule Hours.RecordView do
       work_type: record.work_type,
       date: record.date
     }
+  end
+
+  def count_hours(records) do
+    %{
+      dev: count_hours(records, "Dev"),
+      design: count_hours(records, "Design"),
+      animations: count_hours(records, "Animations"),
+      qa: count_hours(records, "QA"),
+      pm: count_hours(records, "PM")
+    }
+  end
+
+  def count_hours(records, type) do
+    {_total, hours} = 
+      records
+      |> Enum.filter(fn(x) -> x.work_type == type end)
+      |> Enum.map_reduce(0, fn(x, acc) -> {x.hours, x.hours + acc} end)
+
+    hours
   end
 end

@@ -10,7 +10,8 @@ import Columns from 'grommet/components/Columns';
 import FilterForm from '../components/game/FilterForm';
 import EditIcon from 'grommet/components/icons/base/Edit';
 
-import { getTotalHours, getHoursByDate } from '../actions/record';
+import { getHoursByDate } from '../actions/record';
+import { fetchGame } from '../actions/current_game';
 import InfoTable from '../components/game/InfoTable';
 
 class Game extends Component {
@@ -24,7 +25,7 @@ class Game extends Component {
       endDate: ''
     };
 
-    this.props.getTotalHours(this.state.gameId);
+    this.props.fetchGame(this.state.gameId);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -55,6 +56,7 @@ class Game extends Component {
     if (!this.props.hours) {
       return null;
     }
+    console.log(this.props.hours.qa)
     
     return (
       <Box>
@@ -85,13 +87,13 @@ class Game extends Component {
 
 function mapStateToProps(state) {
   return {
-    hours: state.records.hours,
-    game: state.records.game
+    hours: state.records.hours || state.currentGame.hours,
+    game: state.currentGame
   };
 };
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ getTotalHours, getHoursByDate }, dispatch);
+  return bindActionCreators({ fetchGame, getHoursByDate }, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

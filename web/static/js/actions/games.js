@@ -19,7 +19,7 @@ export function createGame(data) {
   return dispatch => {
     return axios.post('/api/v1/games', data)
       .then((response) => {
-        dispatch(gameCreated(response.data.game))
+        dispatch(gameCreated(response.data))
       });
   } 
 }

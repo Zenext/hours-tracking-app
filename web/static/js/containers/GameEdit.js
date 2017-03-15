@@ -92,7 +92,7 @@ class GameEdit extends Component {
 
 function mapStateToProps(state) {
   return {
-    game: state.currentGame.game
+    game: state.currentGame
   }
 }
 

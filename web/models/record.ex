@@ -1,17 +1,17 @@
 defmodule Hours.Record do
   use Hours.Web, :model
 
-  alias Hours.Record
-  alias Hours.Repo
-  
-  import Ecto.Query, only: [from: 2]
+  @derive {Poison.Encoder, only: [:game_id, :hours, :work_type, :date]}
+  alias Hours.{Repo, Record, Game}
+
   import Hours.TimexHelpers, only: [to_db_format: 1]
 
   schema "records" do
-    field :game_id, :integer
     field :hours, :integer
     field :work_type, :string
     field :date, :date   
+
+    belongs_to :game, Game
 
     timestamps()
   end
@@ -23,19 +23,20 @@ defmodule Hours.Record do
     |> validate_number(:hours, greater_than: 0, less_than: 25)
   end
 
-  def get_all(id) do
-    query = from r in Record, where: r.game_id == ^id
-
-    query |> Repo.all
+  def all() do
+    from r in Record, preload: [:game]
   end
 
-  def get_by_time_interval(id, start_date, end_date) do
+  def by_game_id(query, id) do
+    query
+      |> where([r], r.game_id == ^id)
+  end
+
+  def by_time_interval(query, start_date, end_date) do
     start_date = to_db_format(start_date)
     end_date = to_db_format(end_date)
-
-    query = from r in Record,
-      where: r.game_id == ^id and r.date >= ^start_date and r.date <= ^end_date
-
-    query |> Repo.all
+    
+    query
+      |> where([r], r.date >= ^start_date and r.date <= ^end_date)
   end
 end
