@@ -14,6 +14,8 @@ var config = module.exports = {
     modules: ['node_modules'],
   },
 
+  devtool: 'source-map',
+
   module: {
     noParse: /vendor\/phoenix/,
     loaders: [
