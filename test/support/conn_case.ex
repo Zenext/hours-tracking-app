@@ -26,6 +26,7 @@ defmodule Hours.ConnCase do
       import Ecto.Query
 
       import Hours.Router.Helpers
+      import Hours.Factory
 
       # The default endpoint for testing
       @endpoint Hours.Endpoint
