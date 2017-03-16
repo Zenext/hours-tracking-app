@@ -6,7 +6,7 @@ defmodule Hours.GameView do
   import Hours.TimexHelpers, only: [to_user_format: 1]
 
   def render("index.json", %{games: games}) do
-    %{games: Enum.map(games, &game_json/1)}
+    Enum.map(games, &game_json/1)
   end
 
   def render("show.json", %{game: game}) do

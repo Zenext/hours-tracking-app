@@ -27,9 +27,8 @@ export function createGame(data) {
 export function fetchGames() {
   return dispatch => {
     axios.get('/api/v1/games')
-      .then(json => {
-        const games = json.data.games;
-        dispatch(gamesReceived(games));
+      .then(response => {
+        dispatch(gamesReceived(response.data));
       })
   }
 }

@@ -4,7 +4,7 @@ defmodule Hours.RecordView do
   alias Hours.GameView
 
   def render("index.json", %{records: records}) do
-    %{records: Enum.map(records, &record_json/1)}
+    Enum.map(records, &record_json/1)
   end
 
   def render("hours.json", %{records: records}) do
@@ -12,7 +12,7 @@ defmodule Hours.RecordView do
   end
 
   def render("show.json", %{record: record}) do
-    %{record: record_json(record)}
+    record_json(record)
   end
   
   def render("error.json", %{changeset: changeset}) do
