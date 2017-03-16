@@ -12,7 +12,7 @@ defmodule Hours.RecordView do
   end
 
   def render("show.json", %{record: record}) do
-    record
+    %{record: record_json(record)}
   end
   
   def render("error.json", %{changeset: changeset}) do
@@ -28,7 +28,7 @@ defmodule Hours.RecordView do
       id: record.id,
       hours: record.hours,
       work_type: record.work_type,
-      date: record.date
+      date: record.date,
     }
   end
 

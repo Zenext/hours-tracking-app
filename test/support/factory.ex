@@ -7,7 +7,16 @@ defmodule Hours.Factory do
     %Game{
       title: "Diamond Bonanza",
       abbrevation: "DB",
-      start_date: "2017-03-03"
+      start_date: "2017-03-03",
+      records: [build(:record)]
+    }
+  end
+
+  def record_factory do
+    %Record{
+      hours: 8,
+      work_type: "Dev",
+      date: "2017-03-04",
     }
   end
 end
