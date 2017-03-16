@@ -10,7 +10,7 @@ import Columns from 'grommet/components/Columns';
 import FilterForm from '../components/game/FilterForm';
 import EditIcon from 'grommet/components/icons/base/Edit';
 
-import { getHoursByDate } from '../actions/record';
+import { getHoursByDate } from '../actions/hours';
 import { fetchGame } from '../actions/current_game';
 import InfoTable from '../components/game/InfoTable';
 
@@ -31,7 +31,7 @@ class Game extends Component {
   componentWillReceiveProps(nextProps) {
     const game = nextProps.game;
     
-    if (!game || this.state.title.length === 0) {
+    if (this.state.title.length === 0) {
       this.setState({
         title: game.title,
         startDate: game.start_date,
@@ -44,6 +44,14 @@ class Game extends Component {
     this.setState({[fieldName]: value});
   }
 
+  onTotalButtonClick = () => {
+    const game = this.props.game;
+    this.setState({
+      startDate: game.start_date,
+      endDate: new Date().toLocaleDateString("en-GB")
+    });
+  }
+
   onUpdate = () => {
     const gameId = this.state.gameId;
     const startDate = this.state.startDate;
@@ -53,7 +61,7 @@ class Game extends Component {
   }
 
   render() {
-    if (!this.props.hours) {
+    if (!this.props.hours || !this.props.game) {
       return null;
     }
     
@@ -77,7 +85,8 @@ class Game extends Component {
             endDate={this.state.endDate}
             onStartDateChange={this.onDateFieldChanged.bind(this, "startDate")}
             onEndDateChange={this.onDateFieldChanged.bind(this, "endDate")}
-            onUpdate={this.onUpdate} />
+            onUpdate={this.onUpdate}
+            onTotalButtonClick={this.onTotalButtonClick} />
         </Columns> 
       </Box>
     )
@@ -86,7 +95,7 @@ class Game extends Component {
 
 function mapStateToProps(state) {
   return {
-    hours: state.records.hours || state.currentGame.hours,
+    hours: state.hours,
     game: state.currentGame
   };
 };

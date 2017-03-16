@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { NotificationManager } from 'react-notifications';
-import { createRecord } from '../actions/record';
+import { createRecord } from '../actions/records';
 import workTypes from '../constants/workTypes';
 
 import Box from 'grommet/components/Box';

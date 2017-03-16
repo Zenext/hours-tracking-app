@@ -8,7 +8,7 @@ defmodule Hours.RecordView do
   end
 
   def render("hours.json", %{records: records}) do
-    %{records: Enum.map(records, &record_json/1), hours: count_hours(records)}
+    count_hours(records)
   end
 
   def render("show.json", %{record: record}) do

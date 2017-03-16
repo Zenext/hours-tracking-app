@@ -29,6 +29,9 @@ export default class FilterForm extends Component {
         </FormField> 
         
         <br />
+        <Button label="Total"
+          onClick={this.props.onTotalButtonClick} />
+        <br />
         <Button icon={<UpdateIcon />} 
           label="Update"
           primary={true}
