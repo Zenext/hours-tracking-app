@@ -34,8 +34,6 @@ class Game extends Component {
     if (this.state.title.length === 0) {
       this.setState({
         title: game.title,
-        startDate: game.start_date,
-        endDate: new Date().toLocaleDateString("en-GB")
       });
     }
   }
