@@ -7,9 +7,7 @@ defmodule Hours.GameViewTest do
     game = insert(:game)
     rendered_games = GameView.render("index.json", %{games: [game]})
 
-    assert rendered_games == %{
-      games: [GameView.game_json(game)]
-    }
+    assert rendered_games == [GameView.game_json(game)]
   end
 
   test "show.json" do
