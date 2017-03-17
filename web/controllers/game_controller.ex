@@ -56,7 +56,7 @@ defmodule Hours.GameController do
     game = Repo.get!(Game, id)
     
     case Repo.delete(game) do
-      {:ok, game} ->
+      {:ok, _game} ->
         conn
         |> put_status(200)
         |> render("show.json")

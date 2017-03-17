@@ -1,8 +1,6 @@
 defmodule Hours.RecordView do
   use Hours.Web, :view
 
-  alias Hours.GameView
-
   def render("index.json", %{records: records}) do
     Enum.map(records, &record_json/1)
   end
