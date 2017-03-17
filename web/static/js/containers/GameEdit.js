@@ -13,8 +13,10 @@ import TextInput from 'grommet/components/TextInput';
 import DateTime from 'grommet/components/DateTime';
 import Footer from 'grommet/components/Footer';
 import Button from 'grommet/components/Button';
+import TrashIcon from 'grommet/components/icons/base/Trash';
+import Notification from 'grommet/components/Notification';
 
-import { fetchGame, updateGame } from '../actions/current_game';
+import { fetchGame, updateGame, deleteGame } from '../actions/current_game';
 
 class GameEdit extends Component {
   constructor(props) {
@@ -23,7 +25,8 @@ class GameEdit extends Component {
     this.state = {
       id: this.props.params.name,
       title: '',
-      abbrevation: ''
+      abbrevation: '',
+      delete: false
     }
 
     this.props.fetchGame(this.state.id);
@@ -56,6 +59,40 @@ class GameEdit extends Component {
     this.setState({abbrevation: event.target.value});
   }
 
+  onDeleteGameClick = event => {
+    this.setState({delete: true});
+  }
+
+  deleteGame = () => {
+    this.props.deleteGame(this.state.id)
+      .then(this.onGameDeleted)
+      .catch(this.onError);
+  }
+
+  onGameDeleted = () => {
+    browserHistory.push("/games");
+  }
+
+  onError = response => {
+    throw new Error(response);
+  }
+
+  renderPopupDeleteBox = () => {
+    if (this.state.delete) {
+      return (
+        <Notification status="critical"
+          size="small"
+          message="">
+          Are you sure you want to delete the game?
+          <Button label="Delete"
+            onClick={this.deleteGame}/>
+        </Notification>
+      )
+    }
+
+    return null;
+  }
+
   render() {
     if (!this.props.game) {
       return null
@@ -83,8 +120,13 @@ class GameEdit extends Component {
             <Box pad={{"horizontal": "medium"}}>
               <Button path={`/games/${this.props.game.id}`} label='Cancel' type='button' />
             </Box>
+            <Button icon={<TrashIcon />}
+              label="Delete game"
+              onClick={this.onDeleteGameClick}
+              secondary={true} />
           </Footer>
         </Form>
+        {this.renderPopupDeleteBox()}
       </Box>
     );
   }
@@ -97,7 +139,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchGame, updateGame }, dispatch);
+  return bindActionCreators({ fetchGame, updateGame, deleteGame }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameEdit)

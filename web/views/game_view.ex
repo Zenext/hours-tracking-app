@@ -13,6 +13,10 @@ defmodule Hours.GameView do
     game_json(game)
   end
 
+  def render("show.json", %{}) do
+    %{}
+  end
+
   def render("error.json", %{changeset: changeset}) do
     errors = Enum.map(changeset.errors, fn {field, detail} ->
       %{} |> Map.put(field, detail)

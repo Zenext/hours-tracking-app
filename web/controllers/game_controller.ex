@@ -51,4 +51,17 @@ defmodule Hours.GameController do
         render(conn, "error.json", changeset: changeset)
     end
   end
+
+  def delete(conn, %{"id" => id}) do
+    game = Repo.get!(Game, id)
+    
+    case Repo.delete(game) do
+      {:ok, game} ->
+        conn
+        |> put_status(200)
+        |> render("show.json")
+      {:error, changeset} ->
+        render(conn, "error.json", changeset: changeset)
+    end
+  end
 end

@@ -22,3 +22,9 @@ export function fetchGame(id) {
       })
   }
 }
+
+export function deleteGame(id) {
+  return dispatch => {
+    return axios.delete(`/api/v1/games/${id}`);
+  }
+}

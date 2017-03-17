@@ -9,7 +9,7 @@ defmodule Hours.Game do
     field :abbrevation, :string
     field :start_date, :date
 
-    has_many :records, Record
+    has_many :records, Record, on_delete: :delete_all
 
     timestamps()
   end
@@ -19,12 +19,16 @@ defmodule Hours.Game do
     |> cast(params, [:title, :start_date, :abbrevation])
     |> put_assoc(:records, [])
     |> validate_required([:title, :start_date, :abbrevation])
+    |> validate_length(:title, max: 30)
+    |> validate_length(:abbrevation, max: 10)
   end
   
   def changeset_update(struct, params \\ %{}) do
     struct
     |> cast(params, [:title, :abbrevation])
     |> validate_required([:title, :abbrevation])
+    |> validate_length(:title, max: 30)
+    |> validate_length(:abbrevation, max: 10)
   end
 
   def preload_records(query) do
