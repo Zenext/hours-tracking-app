@@ -16,7 +16,7 @@ import Button from 'grommet/components/Button';
 import TrashIcon from 'grommet/components/icons/base/Trash';
 import Notification from 'grommet/components/Notification';
 
-import { fetchGame, updateGame, deleteGame } from '../actions/current_game';
+import { fetchGame, updateGame, deleteGame } from '../actions/currentGame';
 
 class GameEdit extends Component {
   constructor(props) {

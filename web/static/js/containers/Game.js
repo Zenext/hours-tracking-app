@@ -11,7 +11,7 @@ import FilterForm from '../components/game/FilterForm';
 import EditIcon from 'grommet/components/icons/base/Edit';
 
 import { getHoursByDate } from '../actions/hours';
-import { fetchGame } from '../actions/current_game';
+import { fetchGame } from '../actions/currentGame';
 import InfoTable from '../components/game/InfoTable';
 
 class Game extends Component {
@@ -22,7 +22,8 @@ class Game extends Component {
       gameId: parseInt(this.props.params.name),
       title: '',
       startDate: '',
-      endDate: ''
+      endDate: '',
+      hours: {dev: 0, design: 0, animations: 0, art: 0, qa: 0, pm: 0}
     };
 
     this.props.fetchGame(this.state.gameId);
@@ -31,7 +32,7 @@ class Game extends Component {
   componentWillReceiveProps(nextProps) {
     const game = nextProps.game;
     
-    if (this.state.title.length === 0) {
+    if (game && this.state.title.length === 0) {
       this.setState({
         title: game.title,
       });
@@ -55,11 +56,14 @@ class Game extends Component {
     const startDate = this.state.startDate;
     const endDate = this.state.endDate;
     
-    this.props.getHoursByDate(gameId, startDate, endDate);
+    this.props.getHoursByDate(gameId, startDate, endDate)
+      .then(response => {
+        this.setState({hours: response.data});
+      })
   }
 
   render() {
-    if (!this.props.hours || !this.props.game) {
+    if (!this.props.game) {
       return null;
     }
     
@@ -77,7 +81,7 @@ class Game extends Component {
         </Box>
         
         <Columns justify="center">
-          <InfoTable hours={this.props.hours} />
+          <InfoTable hours={this.state.hours} />
           <FilterForm 
             startDate={this.state.startDate}
             endDate={this.state.endDate}
@@ -93,7 +97,6 @@ class Game extends Component {
 
 function mapStateToProps(state) {
   return {
-    hours: state.hours,
     game: state.currentGame
   };
 };
