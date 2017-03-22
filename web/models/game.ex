@@ -34,16 +34,9 @@ defmodule Hours.Game do
   def preload_records(query) do
     query |> preload(:records)
   end
-  
-  def by_id(query, id) do
-    query
-      |> where([g], g.id == ^id)
-      |> preload_records
-  end
 
   def order_by_date(query) do
     query
       |> order_by([g], [desc: g.start_date])
-      |> preload_records
   end
 end

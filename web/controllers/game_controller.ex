@@ -8,6 +8,7 @@ defmodule Hours.GameController do
   def index(conn, _params) do
     games = 
       Game
+      |> Game.preload_records
       |> Game.order_by_date
       |> Repo.all
    
@@ -15,17 +16,18 @@ defmodule Hours.GameController do
   end
 
   def show(conn, %{"id" => id}) do
-    game = Game
-      |> Game.by_id(id)
-      |> Repo.one
+    game = 
+      Game
+      |> Game.preload_records
+      |> Repo.get!(id)
 
     render(conn, "show.json", game: game)
   end
 
-  def update(conn, params) do
+  def update(conn, %{"id" => id} = params) do
     changeset = Game
-      |> Game.by_id(params["id"])
-      |> Repo.one
+      |> Game.preload_records
+      |> Repo.get!(id)
       |> Game.changeset_update(params)
 
     case Repo.update(changeset) do
@@ -38,8 +40,8 @@ defmodule Hours.GameController do
     end
   end
 
-  def create(conn, params) do
-    date = to_date(params["start_date"])
+  def create(conn, %{"start_date" => start_date} = params) do
+    date = to_date(start_date)
     changeset = Game.changeset(%Game{}, %{params | "start_date" => date})
    
     case Repo.insert(changeset) do
@@ -56,10 +58,12 @@ defmodule Hours.GameController do
     game = Repo.get!(Game, id)
     
     case Repo.delete(game) do
-      {:ok, _game} ->
+      {:ok, game} ->
+        game = Repo.preload(game, :records)
+        
         conn
         |> put_status(200)
-        |> render("show.json")
+        |> render("show.json", game: game)
       {:error, changeset} ->
         render(conn, "error.json", changeset: changeset)
     end

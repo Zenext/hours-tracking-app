@@ -24,6 +24,10 @@ defmodule Hours.Record do
     |> validate_number(:hours, greater_than: 0, less_than: 25)
   end
 
+  def preload_all(query) do
+    query |> preload([:game, :person])
+  end
+
   def by_game_id(query, id) do
     query
       |> where([r], r.game_id == ^id)

@@ -8,8 +8,8 @@ defmodule Hours.RecordController do
   def index(conn, _params) do
     records = 
       Record
+      |> Record.preload_all
       |> Repo.all
-      |> Repo.preload([:game, :person])
     
     render(conn, "index.json", records: records)
   end
