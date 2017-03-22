@@ -6,9 +6,22 @@ defmodule Hours.RecordController do
   import Hours.TimexHelpers, only: [to_date: 1]
 
   def index(conn, _params) do
-    records = Record.all() |> Repo.all    
+    records = 
+      Record
+      |> Repo.all
+      |> Repo.preload([:game, :person])
     
     render(conn, "index.json", records: records)
+  end
+
+  def hours(conn, %{"game_id" => game_id, "person_id" => person_id, "start_date" => start_date, "end_date" => end_date}) do
+    records = Record
+      |> Record.by_game_id(game_id)
+      |> Record.by_person_id(person_id)
+      |> Record.by_time_interval(start_date, end_date)
+      |> Repo.all
+
+    render(conn, "hours.json",  records: records)
   end
 
   def hours(conn, %{"game_id" => game_id, "start_date" => start_date, "end_date" => end_date}) do
@@ -34,7 +47,8 @@ defmodule Hours.RecordController do
 
     case Repo.insert(changeset) do
       {:ok, record} ->
-        IO.inspect record
+        record = Repo.preload(record, :person)
+          
         conn
         |> put_status(:created)
         |> render("show.json", record: record)

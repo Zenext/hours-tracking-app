@@ -12,16 +12,16 @@ const gamesReceived = data => {
   return {
     type: Constants.GAMES_DATA_RECEIVED,
     payload: data
-  }
+  };
 };
 
 export function createGame(data) {
   return dispatch => {
     return axios.post('/api/v1/games', data)
-      .then((response) => {
+      .then(response => {
         dispatch(gameCreated(response.data))
       });
-  } 
+  };
 }
 
 export function fetchGames() {
@@ -29,6 +29,6 @@ export function fetchGames() {
     axios.get('/api/v1/games')
       .then(response => {
         dispatch(gamesReceived(response.data));
-      })
-  }
+      });
+  };
 }

@@ -8,6 +8,8 @@ import Game from './containers/Game';
 import GameNew from './containers/GameNew';
 import GameEdit from './containers/GameEdit';
 import RecordNew from './containers/RecordNew';
+import People from './containers/People';
+import PersonNew from './containers/PersonNew';
 
 export default (
   <Route path="/" component={App}>
@@ -16,5 +18,8 @@ export default (
     <Route path="/games/new" component={GameNew} />
     <Route path="/games/:name" component={Game} />
     <Route path="/games/:name/edit" component={GameEdit} />
+
+    <Route path="/people" component={People} />
+    <Route path="/people/new" component={PersonNew} />
   </Route>
 );

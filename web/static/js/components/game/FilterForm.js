@@ -3,15 +3,19 @@ import React, { Component } from 'react';
 import Box from 'grommet/components/Box';
 import Label from 'grommet/components/Label';
 import FormField from 'grommet/components/FormField';
+import Select from 'grommet/components/Select';
 import DateTime from 'grommet/components/DateTime';
 import UpdateIcon from 'grommet/components/icons/base/Update';
 import Button from 'grommet/components/Button';
 
 export default class FilterForm extends Component {
   render() {
+    const peopleByName = this.props.people.map(person => person.name);
+    
     return (
        <Box size="medium"
         pad={{horizontal: "large"}}>
+        
         <Label>Start date</Label>
         <FormField>
           <DateTime name="startDate"
@@ -31,7 +35,17 @@ export default class FilterForm extends Component {
         <br />
         <Button label="Total"
           onClick={this.props.onTotalButtonClick} />
+
+        <Label>Person</Label>
+        <FormField>
+          <Select options={peopleByName}
+            value={this.props.selectedPerson.name}
+            onChange={this.props.onPersonSelect}>
+          </Select>
+        </FormField>
+        
         <br />
+        
         <Button icon={<UpdateIcon />} 
           label="Update"
           primary={true}

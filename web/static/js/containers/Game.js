@@ -23,7 +23,8 @@ class Game extends Component {
       title: '',
       startDate: '',
       endDate: '',
-      hours: {dev: 0, design: 0, animations: 0, art: 0, qa: 0, pm: 0}
+      hours: {dev: 0, design: 0, animations: 0, art: 0, qa: 0, pm: 0},
+      person: {}
     };
 
     this.props.fetchGame(this.state.gameId);
@@ -32,7 +33,7 @@ class Game extends Component {
   componentWillReceiveProps(nextProps) {
     const game = nextProps.game;
     
-    if (game && this.state.title.length === 0) {
+    if (game.title && this.state.title.length === 0) {
       this.setState({
         title: game.title,
       });
@@ -51,21 +52,28 @@ class Game extends Component {
     });
   }
 
+  onPersonSelect = (event) => {
+    const personObj = this.props.people.filter(person => person.name === event.value)[0];
+    this.setState({person: personObj}); 
+  }
+
   onUpdate = () => {
     const gameId = this.state.gameId;
     const startDate = this.state.startDate;
     const endDate = this.state.endDate;
+    const personId = this.state.person.id;
     
-    this.props.getHoursByDate(gameId, startDate, endDate)
+    this.props.getHoursByDate(gameId, startDate, endDate, personId)
       .then(response => {
         this.setState({hours: response.data});
       })
   }
 
   render() {
-    if (!this.props.game) {
+    if (!this.props.game || this.props.people.length === 0) {
       return null;
     }
+
     
     return (
       <Box>
@@ -83,6 +91,9 @@ class Game extends Component {
         <Columns justify="center">
           <InfoTable hours={this.state.hours} />
           <FilterForm 
+            people={this.props.people}
+            selectedPerson={this.state.person}
+            onPersonSelect={this.onPersonSelect}
             startDate={this.state.startDate}
             endDate={this.state.endDate}
             onStartDateChange={this.onDateFieldChanged.bind(this, "startDate")}
@@ -97,6 +108,7 @@ class Game extends Component {
 
 function mapStateToProps(state) {
   return {
+    people: state.people,
     game: state.currentGame
   };
 };

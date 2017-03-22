@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 
 import { fetchGames } from '../actions/games';
 
@@ -9,7 +9,7 @@ import Table from 'grommet/components/Table';
 import TableRow from 'grommet/components/TableRow';
 import Button from 'grommet/components/Button';
 
-class GamesContainer extends Component {
+class Games extends Component {
   componentWillMount() {
     const { dispatch } = this.props;
     dispatch(fetchGames());
@@ -58,4 +58,4 @@ function mapStateToProps(state) {
   };
 };
 
-export default connect(mapStateToProps)(GamesContainer);
+export default connect(mapStateToProps)(Games);

@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 import Constants from '../constants';
 
 const fetchHours = (params) => {
@@ -8,11 +7,12 @@ const fetchHours = (params) => {
   }
 }
 
-export function getHoursByDate(gameId, startDate, endDate) {
+export function getHoursByDate(gameId, startDate, endDate, personId) {
   const params = {
     game_id: gameId,
     start_date: startDate,
-    end_date: endDate
+    end_date: endDate,
+    person_id: personId
   };
 
   return fetchHours(params);

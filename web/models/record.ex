@@ -1,8 +1,8 @@
 defmodule Hours.Record do
   use Hours.Web, :model
 
-  @derive {Poison.Encoder, only: [:game_id, :hours, :work_type, :date]}
-  alias Hours.{Record, Game}
+  @derive {Poison.Encoder, only: [:game_id, :person_id, :hours, :work_type, :date]}
+  alias Hours.{Record, Game, Person}
 
   import Hours.TimexHelpers, only: [to_date: 1]
 
@@ -12,24 +12,26 @@ defmodule Hours.Record do
     field :date, :date   
 
     belongs_to :game, Game
+    belongs_to :person, Person
 
     timestamps()
   end
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:game_id, :hours, :work_type, :date])
-    |> validate_required([:game_id, :hours, :work_type, :date])
+    |> cast(params, [:game_id, :person_id, :hours, :work_type, :date])
+    |> validate_required([:game_id, :person_id, :hours, :work_type, :date])
     |> validate_number(:hours, greater_than: 0, less_than: 25)
-  end
-
-  def all() do
-    from r in Record, preload: [:game]
   end
 
   def by_game_id(query, id) do
     query
       |> where([r], r.game_id == ^id)
+  end
+
+  def by_person_id(query, id) do
+    query
+      |> where([r], r.person_id == ^id)
   end
 
   def by_time_interval(query, start_date, end_date) do

@@ -27,18 +27,23 @@ class RecordsNew extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       games: nextProps.games,
+      people: nextProps.people,
       selectedGame: nextProps.games[0],
-      selectedWorkType: 'Dev'
+      selectedWorkType: 'Dev',
+      selectedPerson: nextProps.people[0]
     })
   }
 
   getInitialState = () => {
     const selectedGame = this.props.games[0] ? this.props.games[0] : {};
+    const selectedPerson = this.props.people[0] ? this.props.people[0] : {};
     
     return {
       games: this.props.games || [],
+      people: this.props.people || [],
       selectedGame: selectedGame,
       selectedWorkType: workTypes[0], 
+      selectedPerson: selectedPerson,
       date: new Date().toLocaleDateString("en-GB"),
       hours: '',
     };
@@ -49,6 +54,7 @@ class RecordsNew extends Component {
     
     const params = {
       game_id: this.state.selectedGame.id,
+      person_id: this.state.selectedPerson.id,
       work_type: this.state.selectedWorkType,
       date: this.state.date,
       hours: this.state.hours
@@ -86,11 +92,6 @@ class RecordsNew extends Component {
     this.setState({hours: value});
   }
 
-  onSelectGame = (event) => {
-    const gameObj = this.props.games.filter(game => game.title === event.value)[0];
-    this.setState({selectedGame: gameObj});
-  }
-
   onGameSearch = (event) => {
     if (event.target.value.length === 0) {
       this.setState({games: this.props.games});
@@ -107,17 +108,28 @@ class RecordsNew extends Component {
     
     this.setState({games});
   }
-
-  onSelectWorkType = (event) => {
+  
+  onSelectGame = (event) => {
+    const gameObj = this.props.games.filter(game => game.title === event.value)[0];
+    this.setState({selectedGame: gameObj});
+  }
+  
+  onSelectWorkType = event => {
     this.setState({selectedWorkType: event.value});
   }
 
+  onSelectPerson = event => {
+    const personObj = this.props.people.filter(person => person.name === event.value)[0];
+    this.setState({selectedPerson: personObj}); 
+  }
+
   render() {
-    if (this.props.games.length === 0) {
+    if (this.props.games.length === 0 || this.props.people.length === 0) {
       return null;
     }
 
     const gamesByName = this.state.games.map(game => game.title);
+    const peopleByName = this.state.people.map(person => person.name);
     
     return (
       <Box align='center'
@@ -128,7 +140,6 @@ class RecordsNew extends Component {
               Add record
             </Heading>
           </Header>
-
 
           <FormField label='Game name'>
             <Select options={gamesByName}
@@ -142,6 +153,13 @@ class RecordsNew extends Component {
             <Select options={workTypes}
               value={this.state.selectedWorkType}
               onChange={this.onSelectWorkType}>
+            </Select>
+          </FormField>
+
+          <FormField label='Person'>
+            <Select options={peopleByName}
+              value={this.state.selectedPerson.name}
+              onChange={this.onSelectPerson}>
             </Select>
           </FormField>
           
@@ -171,6 +189,7 @@ class RecordsNew extends Component {
 
 function mapStateToProps(state) {
   return {
+    people: state.people,
     games: state.games
   }
 }

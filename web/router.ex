@@ -18,6 +18,7 @@ defmodule Hours.Router do
 
     scope "/v1" do
       resources "/games", GameController
+      resources "/people", PersonController
       resources "/records", RecordController, only: [:create, :index]
       get "/records/hours", RecordController, :hours
     end

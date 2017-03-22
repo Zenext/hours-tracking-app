@@ -14,6 +14,9 @@ const renderMenu = () => {
         <Anchor path="/games">
           Games
         </Anchor>
+        <Anchor path="/people">
+          People
+        </Anchor>
         <Anchor path="/records/new">
           Records
         </Anchor>
