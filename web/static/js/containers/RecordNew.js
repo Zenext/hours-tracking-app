@@ -11,7 +11,7 @@ import Header from 'grommet/components/Header';
 import Heading from 'grommet/components/Heading';
 import Select from 'grommet/components/Select';
 import FormField from 'grommet/components/FormField';
-import NumberInput from 'grommet/components/NumberInput';
+import TextInput from 'grommet/components/TextInput';
 import DateTime from 'grommet/components/DateTime';
 import Footer from 'grommet/components/Footer';
 import Button from 'grommet/components/Button';
@@ -81,12 +81,11 @@ class RecordsNew extends Component {
   
   onHoursFieldChange = (event) => {
     let value = event.target.value;
-    if (value.length === 0) {
+    let float = parseFloat(value);
+    if (isNaN(float) || value.length > 3) {
       value = "";
-    } else if (parseInt(value) > 24) {
-      value = 24;
-    } else if (parseInt(value) < 1) {
-      value = 1
+    } else if (float > 24) {
+      value = "24";
     }
     
     this.setState({hours: value});
@@ -170,11 +169,9 @@ class RecordsNew extends Component {
           </FormField>
           
           <FormField label="Hours">
-            <NumberInput name="hours"
-              max={24}
-              min={1}
+            <TextInput name="hours"
               value={this.state.hours}
-              onChange={this.onHoursFieldChange} />
+              onDOMChange={this.onHoursFieldChange} />
           </FormField>
           
           <Footer pad={{"vertical": "medium"}}>

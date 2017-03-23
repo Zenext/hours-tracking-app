@@ -7,7 +7,7 @@ defmodule Hours.Record do
   import Hours.TimexHelpers, only: [to_date: 1]
 
   schema "records" do
-    field :hours, :integer
+    field :hours, :float
     field :work_type, :string
     field :date, :date   
 
