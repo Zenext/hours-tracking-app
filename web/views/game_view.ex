@@ -3,7 +3,7 @@ defmodule Hours.GameView do
 
   alias Hours.RecordView
 
-  import Hours.TimexHelpers, only: [to_user_format: 1]
+  alias Hours.TimexHelpers
 
   def render("index.json", %{games: games}) do
     Enum.map(games, &game_json/1)
@@ -29,7 +29,7 @@ defmodule Hours.GameView do
     %{
       id: game.id,
       title: game.title,
-      start_date: to_user_format(game.start_date),
+      start_date: TimexHelpers.to_user_format(game.start_date),
       abbrevation: game.abbrevation,
       hours: RecordView.count_hours(game.records)
     }

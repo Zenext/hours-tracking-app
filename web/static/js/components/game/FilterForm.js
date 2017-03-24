@@ -9,9 +9,21 @@ import UpdateIcon from 'grommet/components/icons/base/Update';
 import Button from 'grommet/components/Button';
 
 export default class FilterForm extends Component {
+  renderTotalButton() {
+    if (typeof this.props.onTotalButtonClick === 'function') {
+      return (
+        <Box>
+          <br />
+          <Button label="Total"
+            onClick={this.props.onTotalButtonClick} /> 
+        </Box>
+      )
+    }
+
+    return null;
+  }
+  
   render() {
-    const peopleByName = this.props.people.map(person => person.name);
-    
     return (
        <Box size="medium"
         pad={{horizontal: "large"}}>
@@ -32,18 +44,7 @@ export default class FilterForm extends Component {
             onChange={this.props.onEndDateChange} />
         </FormField> 
         
-        <br />
-        <Button label="Total"
-          onClick={this.props.onTotalButtonClick} />
-
-        <Label>Person</Label>
-        <FormField>
-          <Select options={peopleByName}
-            value={this.props.selectedPerson.name}
-            onChange={this.props.onPersonSelect}>
-          </Select>
-        </FormField>
-        
+        {this.renderTotalButton()}
         <br />
         
         <Button icon={<UpdateIcon />} 

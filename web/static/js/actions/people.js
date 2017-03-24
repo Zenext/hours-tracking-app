@@ -48,3 +48,12 @@ export function fetchPeople() {
       });
   };
 }
+
+export function fetchPersonGamesByDate(id, startDate, endDate) {
+  const params = {
+    start_date: startDate,
+    end_date: endDate
+  };
+  
+  return axios.get(`/api/v1/people/${id}/games`, {params: params});
+}

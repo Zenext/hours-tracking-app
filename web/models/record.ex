@@ -29,20 +29,17 @@ defmodule Hours.Record do
   end
 
   def by_game_id(query, id) do
-    query
-      |> where([r], r.game_id == ^id)
+    query |> where([r], r.game_id == ^id)
   end
 
   def by_person_id(query, id) do
-    query
-      |> where([r], r.person_id == ^id)
+    query |> where([r], r.person_id == ^id)
   end
 
   def by_time_interval(query, start_date, end_date) do
     start_date = to_date(start_date)
     end_date = to_date(end_date)
     
-    query
-      |> where([r], r.date >= ^start_date and r.date <= ^end_date)
+    query |> where([r], r.date >= ^start_date and r.date <= ^end_date)
   end
 end
