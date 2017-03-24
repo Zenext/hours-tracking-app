@@ -6,7 +6,9 @@ defmodule Hours.GameView do
   alias Hours.TimexHelpers
 
   def render("index.json", %{games: games}) do
-    Enum.map(games, &game_json/1)
+    games
+    |> Enum.map(&game_json/1)
+    |> Enum.sort(fn(x, y) -> x.title < y.title end)
   end
 
   def render("show.json", %{game: game}) do
