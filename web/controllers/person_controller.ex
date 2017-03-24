@@ -14,14 +14,18 @@ defmodule Hours.PersonController do
       Person
       |> Person.preload_records
       |> Person.by_time_interval(start_date, end_date)
-      |> Repo.get!(id)
+      |> Repo.get(id)
 
-    games =
-      person.records
-      |> Enum.map(fn record -> record.game end)
-      |> Enum.uniq 
+    if person == nil do
+      render(conn, "games.json", games: [])
+    else
+      games =
+        person.records
+        |> Enum.map(fn record -> record.game end)
+        |> Enum.uniq 
 
-    render(conn, "games.json", games: games)
+      render(conn, "games.json", games: games)  
+    end
   end
 
   def show(conn, %{"id" => id}) do

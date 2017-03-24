@@ -37,7 +37,7 @@ const renderTableBody = (values) => {
 
 export default class InfoTable extends Component {
   render() {
-    if (!this.props.hours) {
+    if (!Object.keys(this.props.hours).length) {
       return null;
     }
     
@@ -46,12 +46,12 @@ export default class InfoTable extends Component {
         <Table>
           {renderTableHead(['Type', 'Hours'])}
           {renderTableBody([
-            {type: "Dev", hours: this.props.hours.dev || 0},
-            {type: "Design", hours: this.props.hours.design || 0},
-            {type: "Animations", hours: this.props.hours.animations || 0},
-            {type: "Art Total", hours: this.props.hours.design + this.props.hours.animations || 0},
-            {type: "QA", hours: this.props.hours.qa || 0},
-            {type: "PM", hours: this.props.hours.pm || 0},
+            {type: "Dev", hours: this.props.hours.dev},
+            {type: "Design", hours: this.props.hours.design},
+            {type: "Animations", hours: this.props.hours.animations},
+            {type: "Art Total", hours: this.props.hours.design + this.props.hours.animations},
+            {type: "QA", hours: this.props.hours.qa},
+            {type: "PM", hours: this.props.hours.pm},
           ])}
         </Table>  
       </Box>

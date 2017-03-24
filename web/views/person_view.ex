@@ -11,6 +11,10 @@ defmodule Hours.PersonView do
     person_json(person)
   end
 
+  def render("games.json", %{games: []}) do
+    []
+  end
+
   def render("games.json", %{games: games}) do
     Enum.map(games, &game_json/1)
   end

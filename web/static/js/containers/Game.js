@@ -5,14 +5,13 @@ import { Link } from 'react-router';
 
 import Box from 'grommet/components/Box';
 import Heading from 'grommet/components/Heading';
-import Section from 'grommet/components/Section';
 import Columns from 'grommet/components/Columns';
-import FilterForm from '../components/game/FilterForm';
+import FilterForm from '../components/FilterForm';
 import EditIcon from 'grommet/components/icons/base/Edit';
 
 import { getHoursByDate } from '../actions/hours';
 import { fetchGame } from '../actions/currentGame';
-import InfoTable from '../components/game/InfoTable';
+import InfoTable from '../components/InfoTable';
 
 class Game extends Component {
   constructor(props) {
@@ -56,7 +55,7 @@ class Game extends Component {
     const startDate = this.state.startDate;
     const endDate = this.state.endDate;
     
-    this.props.getHoursByDate(gameId, startDate, endDate)
+    getHoursByDate(gameId, startDate, endDate)
       .then(response => {
         this.setState({hours: response.data});
       })
@@ -102,7 +101,7 @@ function mapStateToProps(state) {
 };
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchGame, getHoursByDate }, dispatch);
+  return bindActionCreators({ fetchGame }, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

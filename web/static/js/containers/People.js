@@ -3,34 +3,35 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import Box from 'grommet/components/Box';
-import List from 'grommet/components/List';
-import ListItem from 'grommet/components/ListItem';
 import Button from 'grommet/components/Button';
 import Notification from 'grommet/components/Notification';
-
 import TrashIcon from 'grommet/components/icons/base/Trash';
 import UserAddIcon from 'grommet/components/icons/base/UserAdd';
 import Select from 'grommet/components/Select';
-import InfoTable from '../components/game/InfoTable';
-import FilterForm from '../components/game/FilterForm';
+import InfoTable from '../components/InfoTable';
+import FilterForm from '../components/FilterForm';
 import GamesList from '../components/GamesList';
 import Columns from 'grommet/components/Columns';
 
 import { deletePerson, fetchPersonGamesByDate } from '../actions/people';
-import { getHoursByDate } from '../actions/hours';
+import { getHoursByPerson } from '../actions/hours';
 
 class People extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.state = this.getInitialState(); 
+  }
+
+  getInitialState() {
+    return {
       games: [],
-      hours: null,
+      hours: {},
       endDate: new Date().toLocaleDateString("en-GB"),
       selectedPerson: {},
       selectedGame: {},
       deletePerson: false,
-    }
+    };
   }
 
   onDeletePersonClick = () => {
@@ -48,24 +49,19 @@ class People extends Component {
   }
 
   onPersonDeleted = () => {
-    this.setState({
-      selectedPerson: {},
-      games: [],
-      hours: null,
-      deletePerson: false,
-    });
+    this.setState(this.getInitialState());
   }
 
   onSelectPerson = event => {
     const personObj = this.props.people.filter(person => person.name === event.value)[0];
-    this.setState({selectedPerson: personObj, games: [], hours: null});
+    this.setState({selectedPerson: personObj, games: [], hours: {}});
   }
 
   onGameSelect = data => {
     const personId = this.state.selectedPerson.id;
     const endDate = this.state.endDate;
     
-    getHoursByDate(data.id, personId, data.start_date, endDate)
+    getHoursByPerson(data.id, personId, data.start_date, endDate)
       .then(response => {
         this.setState({hours: response.data, selectedGame: data});
       })
@@ -83,14 +79,22 @@ class People extends Component {
       })
       .catch(this.onError);
   }
+
+  onNotificationClose = () => {
+    this.setState({deletePerson: false});
+  }
   
   onError = response => {
     throw new Error(response);
   }
 
   renderContent = () => {
-    if (!this.state.selectedPerson.id) {
-      return <p>Select person</p>;
+    if (!Object.keys(this.state.selectedPerson).length) {
+      return (
+        <Box alignSelf="center" pad="large">
+          <h2>Select a person</h2>
+        </Box>
+      )
     }
     
     return (
@@ -101,44 +105,33 @@ class People extends Component {
             onStartDateChange={this.onDateFieldChanged.bind(this, "startDate")}
             onEndDateChange={this.onDateFieldChanged.bind(this, "endDate")}
             onUpdate={this.onUpdate} />
-        <GamesList games={this.state.games}
-          onGameSelect={this.onGameSelect}/>
+        <GamesList games={this.state.games} onGameSelect={this.onGameSelect}/>
         <InfoTable hours={this.state.hours} />
       </Columns>
     )
   }
 
-  render() {
-    if (this.props.people.length === 0) {
-      return <p>No people found!</p>
-    }
-    
+  renderHeader = () => {
     const peopleByName = this.props.people.map(person => person.name);
     
     return (
-      <Box>
-        <Box alignSelf="center"
-          pad="large"
-          separator="bottom"
-          direction="row">
+      <Box alignSelf="center"
+        pad="large"
+        separator="bottom"
+        direction="row">
 
-          <Select options={peopleByName}
-            value={this.state.selectedPerson.name}
-            onChange={this.onSelectPerson}>
-          </Select>
-          
-          <Button className="btn-icon" path="/people/new" icon={<UserAddIcon />} secondary={true} />
-          <Button className="btn-icon"
-            icon={<TrashIcon />}
-            secondary={true}
-            onClick={this.onDeletePersonClick}/>
-        </Box>  
-
-        {this.renderContent()} 
-        {this.renderPopupDeleteBox()}
+        <Select options={peopleByName}
+          value={this.state.selectedPerson.name}
+          onChange={this.onSelectPerson}>
+        </Select>
+        
+        <Button className="btn-icon" path="/people/new" icon={<UserAddIcon />} secondary={true} />
+        <Button className="btn-icon"
+          icon={<TrashIcon />}
+          secondary={true}
+          onClick={this.onDeletePersonClick}/>
       </Box>
-      
-    );
+    )
   }
 
   renderPopupDeleteBox = () => {
@@ -146,6 +139,8 @@ class People extends Component {
       return (
         <Box pad="large">
           <Notification status="critical"
+            closer={true}
+            onClose={this.onNotificationClose}
             size="small"
             message="Are you sure you want to delete this person?"
             state={this.state.selectedPerson.name}>
@@ -159,12 +154,25 @@ class People extends Component {
 
     return null;
   }
+
+  render() {
+    if (this.props.people.length === 0) {
+      return <p>No people found!</p>
+    }
+    
+    return (
+      <Box>
+        {this.renderHeader()} 
+        {this.renderContent()} 
+        {this.renderPopupDeleteBox()}
+      </Box>
+    );
+  }
+  
 }
 
 function mapStateToProps(state) {
   return {
-    hours: state.hours,
-    games: state.games,
     people: state.people
   }
 }
