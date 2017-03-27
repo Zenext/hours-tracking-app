@@ -11,4 +11,3 @@ defmodule Hours.Repo.Migrations.CreateGame do
     end
   end
 end
-

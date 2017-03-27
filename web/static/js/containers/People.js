@@ -157,7 +157,12 @@ class People extends Component {
 
   render() {
     if (this.props.people.length === 0) {
-      return <p>No people found!</p>
+      return (
+        <div>
+          <Button className="btn-icon" path="/people/new" icon={<UserAddIcon />} secondary={true} />
+          <p>No people found!</p> 
+        </div>
+      )
     }
     
     return (

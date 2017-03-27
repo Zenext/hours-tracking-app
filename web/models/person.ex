@@ -9,7 +9,7 @@ defmodule Hours.Person do
   schema "people" do
     field :name, :string
     
-    has_many :records, Record, on_delete: :delete_all
+    has_many :records, Record, on_delete: :nilify_all
 
     timestamps()
   end
