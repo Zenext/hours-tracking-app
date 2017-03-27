@@ -17,7 +17,7 @@ const renderMenu = () => {
         <Anchor path="/people">
           People
         </Anchor>
-        <Anchor path="/records/new">
+        <Anchor path="/records">
           Records
         </Anchor>
       </Menu>

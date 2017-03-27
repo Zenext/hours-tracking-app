@@ -28,6 +28,14 @@ defmodule Hours.Record do
     query |> preload([:game, :person])
   end
 
+  def set_limit(query, limit) do
+    query |> limit(^limit)
+  end
+
+  def newest_first(query) do
+    query |> order_by([r], desc: r.inserted_at)
+  end
+
   def by_game_id(query, id) do
     query |> where([r], r.game_id == ^id)
   end

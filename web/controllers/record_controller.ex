@@ -4,6 +4,17 @@ defmodule Hours.RecordController do
   alias Hours.Record
   
   import Hours.TimexHelpers, only: [to_date: 1]
+  
+  def index(conn, %{"limit" => limit}) do
+    records =
+      Record
+      |> Record.preload_all
+      |> Record.set_limit(limit)
+      |> Record.newest_first
+      |> Repo.all
+
+    render(conn, "index.json", records: records)
+  end
 
   def index(conn, _params) do
     records = 

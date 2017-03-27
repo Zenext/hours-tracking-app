@@ -27,7 +27,8 @@ defmodule Hours.RecordView do
       hours: record.hours,
       work_type: record.work_type,
       date: record.date,
-      person: record.person
+      person: record.person,
+      game: record.game
     }
   end
 
