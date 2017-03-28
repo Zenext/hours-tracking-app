@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import moment from 'moment';
 
+import PopupDelete from '../components/PopupDelete';
+
 import Box from 'grommet/components/Box';
 import Form from 'grommet/components/Form';
 import Header from 'grommet/components/Header';
@@ -73,6 +75,10 @@ class GameEdit extends Component {
     browserHistory.push("/games");
   }
 
+  onNotificationClose = () => {
+    this.setState({delete: false});
+  }
+
   onError = response => {
     throw new Error(response);
   }
@@ -80,13 +86,10 @@ class GameEdit extends Component {
   renderPopupDeleteBox = () => {
     if (this.state.delete) {
       return (
-        <Notification status="critical"
-          size="small"
-          message="">
-          Are you sure you want to delete the game?
-          <Button label="Delete"
-            onClick={this.deleteGame}/>
-        </Notification>
+        <PopupDelete state={this.state.title}
+        message="Are you sure you want to delete this game?"
+        onDeleteButtonClick={this.deleteGame}
+        onNotificationClose={this.onNotificationClose} />
       )
     }
 

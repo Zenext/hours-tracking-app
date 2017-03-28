@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import RecordList from '../components/RecordList';
+import PopupDelete from '../components/PopupDelete';
 import workTypes from '../constants/workTypes';
 
 import Box from 'grommet/components/Box';
@@ -109,17 +110,10 @@ class Records extends Component {
   renderPopupDeleteBox = () => {
     if (this.state.deleteRecord) {
       return (
-        <Box pad="large">
-          <Notification status="critical"
-            closer={true}
-            onClose={this.onNotificationClose}
-            size="small"
-            message="Are you sure you want to delete this record?">
-            <br />
-            <Button label="Delete"
-              onClick={this.deleteRecord}/>
-          </Notification>  
-        </Box>
+        <PopupDelete
+          onNotificationClose={this.onNotificationClose}
+          onDeleteButtonClick={this.deleteRecord}
+          message="Are you sure you want to delete this record?" />
       )
     }
 

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import PopupDelete from '../components/PopupDelete';
+
 import Box from 'grommet/components/Box';
 import Button from 'grommet/components/Button';
 import Notification from 'grommet/components/Notification';
@@ -137,18 +139,11 @@ class People extends Component {
   renderPopupDeleteBox = () => {
     if (this.state.deletePerson) {
       return (
-        <Box pad="large">
-          <Notification status="critical"
-            closer={true}
-            onClose={this.onNotificationClose}
-            size="small"
-            message="Are you sure you want to delete this person?"
-            state={this.state.selectedPerson.name}>
-            <br />
-            <Button label="Delete"
-              onClick={this.deletePerson}/>
-          </Notification>  
-        </Box>
+        <PopupDelete
+          onNotificationClose={this.onNotificationClose}
+          onDeleteButtonClick={this.deletePerson}
+          message="Are you sure you want to delete this person?"
+          state={this.state.selectedPerson.name} />
       )
     }
 
@@ -169,7 +164,9 @@ class People extends Component {
       <Box>
         {this.renderHeader()} 
         {this.renderContent()} 
-        {this.renderPopupDeleteBox()}
+        <Box pad="large">
+          {this.renderPopupDeleteBox()}
+        </Box>
       </Box>
     );
   }
