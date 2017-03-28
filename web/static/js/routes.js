@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 
 import App from './containers/App';
 
@@ -14,6 +14,8 @@ import PersonNew from './containers/PersonNew';
 
 export default (
   <Route path="/" component={App}>
+    <IndexRoute component={Games} />
+    
     <Route path="/records" component={Records} />
     <Route path="/records/new" component={RecordNew} />
     
