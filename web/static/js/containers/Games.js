@@ -23,10 +23,8 @@ class Games extends Component {
     return (
       <Box size='large'
         pad={{"vertical": "medium"}}
-        align='center'
+        align='start'
         alignSelf='center'>
-        <Button path="/games/new" label="Add new game" primary={true} />
-        <br />
         <Table selectable={true}>
           <thead>
             <tr>
@@ -48,6 +46,7 @@ class Games extends Component {
             })}
           </tbody>
         </Table> 
+        <Button path="/games/new" label="Add new game" primary={true} />
       </Box>
     );
   }
