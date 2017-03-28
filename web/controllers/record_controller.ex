@@ -53,7 +53,7 @@ defmodule Hours.RecordController do
 
     case Repo.insert(changeset) do
       {:ok, record} ->
-        record = Repo.preload(record, :person)
+        record = Repo.preload(record, [:game, :person])
           
         conn
         |> put_status(:created)
