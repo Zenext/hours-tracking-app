@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import Box from 'grommet/components/Box';
 import Heading from 'grommet/components/Heading';
 import Columns from 'grommet/components/Columns';
-import FilterForm from '../components/FilterForm';
+import DateFilterForm from '../components/DateFilterForm';
 import EditIcon from 'grommet/components/icons/base/Edit';
 
 import { getHoursByDate } from '../actions/hours';
@@ -81,7 +81,7 @@ class Game extends Component {
         
         <Columns justify="center">
           <InfoTable hours={this.state.hours} />
-          <FilterForm 
+          <DateFilterForm 
             startDate={this.state.startDate}
             endDate={this.state.endDate}
             onStartDateChange={this.onDateFieldChanged.bind(this, "startDate")}

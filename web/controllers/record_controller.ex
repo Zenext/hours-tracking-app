@@ -13,6 +13,7 @@ defmodule Hours.RecordController do
     records = 
       Record
       |> QueryFilter.filter(%Record{}, params, [:game_id, :person_id, :work_type, :date])
+      |> Record.set_limit(params["limit"])
       |> Record.preload_all
       |> Record.newest_first
       |> Repo.all

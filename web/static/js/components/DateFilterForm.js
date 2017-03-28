@@ -8,7 +8,7 @@ import DateTime from 'grommet/components/DateTime';
 import UpdateIcon from 'grommet/components/icons/base/Update';
 import Button from 'grommet/components/Button';
 
-export default class FilterForm extends Component {
+export default class DateFilterForm extends Component {
   renderTotalButton() {
     if (typeof this.props.onTotalButtonClick === 'function') {
       return (

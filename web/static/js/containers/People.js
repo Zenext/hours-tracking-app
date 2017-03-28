@@ -11,7 +11,7 @@ import TrashIcon from 'grommet/components/icons/base/Trash';
 import UserAddIcon from 'grommet/components/icons/base/UserAdd';
 import Select from 'grommet/components/Select';
 import InfoTable from '../components/InfoTable';
-import FilterForm from '../components/FilterForm';
+import DateFilterForm from '../components/DateFilterForm';
 import GamesList from '../components/GamesList';
 import Columns from 'grommet/components/Columns';
 
@@ -101,7 +101,7 @@ class People extends Component {
     
     return (
       <Columns justify="start">
-        <FilterForm 
+        <DateFilterForm 
             startDate={this.state.startDate}
             endDate={this.state.endDate}
             onStartDateChange={this.onDateFieldChanged.bind(this, "startDate")}

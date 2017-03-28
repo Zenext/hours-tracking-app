@@ -5,6 +5,7 @@ import Title from 'grommet/components/Title';
 import Box from 'grommet/components/Box';
 import Menu from 'grommet/components/Menu';
 import Anchor from 'grommet/components/Anchor';
+import AddIcon from 'grommet/components/icons/base/Add';
 
 const renderMenu = () => {
   return (
@@ -19,6 +20,9 @@ const renderMenu = () => {
         </Anchor>
         <Anchor path="/records">
           Records
+        </Anchor>
+        <Anchor path="/records/new">
+          New Record 
         </Anchor>
       </Menu>
     </Box>

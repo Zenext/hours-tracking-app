@@ -37,8 +37,9 @@ class Records extends Component {
     const person = prevState.selectedPerson.id !== this.state.selectedPerson.id;
     const work_type = prevState.selectedWorkType !== this.state.selectedWorkType;
     const date = prevState.date !== this.state.date;
+    const limit = prevState.recordsLimit !== this.state.recordsLimit;
 
-    if (game || person || work_type || date) {
+    if (game || person || work_type || date || limit) {
       this.requestRecords();
     }
   }
@@ -57,9 +58,7 @@ class Records extends Component {
   }
 
   recordsReceived = (response) => {
-    const currentLimit = this.state.recordsLimit;
-    const limit = response.data.length > this.state.records.length ? currentLimit + 5 : currentLimit;
-    this.setState({records: response.data, recordsLimit: limit});
+    this.setState({records: response.data});
   }
 
   onDeleteRecordClick = (record) => {
@@ -96,6 +95,10 @@ class Records extends Component {
 
   onDateFieldChange = (value) => {
     this.setState({date: value});
+  }
+  
+  loadMoreRecords = () => {
+    this.setState({recordsLimit: this.state.recordsLimit + 5});
   }
 
   resetFilters = () => {
@@ -168,7 +171,7 @@ class Records extends Component {
           {this.renderPopupDeleteBox()}
           <RecordList records={this.state.records}
             onDeleteRecordClick={this.onDeleteRecordClick} />
-          <Button onClick={this.requestRecords}
+          <Button onClick={this.loadMoreRecords}
             primary={true}
             label="Load more" />
         </Box>
