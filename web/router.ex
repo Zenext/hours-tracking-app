@@ -20,7 +20,7 @@ defmodule Hours.Router do
       resources "/games", GameController
       get "/people/:id/games", PersonController, :games
       resources "/people", PersonController
-      resources "/records", RecordController, only: [:create, :index]
+      resources "/records", RecordController, only: [:create, :index, :delete]
       get "/records/hours", RecordController, :hours
     end
   end

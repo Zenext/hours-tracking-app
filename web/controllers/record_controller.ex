@@ -1,27 +1,22 @@
 defmodule Hours.RecordController do
   use Hours.Web, :controller
 
-  alias Hours.Record
+  alias Hours.{Record, QueryFilter, TimexHelpers}
   
   import Hours.TimexHelpers, only: [to_date: 1]
-  
-  def index(conn, %{"limit" => limit}) do
-    records =
+
+  def index(conn,  params) do
+    if params["date"] != nil do
+      params = %{params | "date" => TimexHelpers.to_date(params["date"])}
+    end
+    
+    records = 
       Record
+      |> QueryFilter.filter(%Record{}, params, [:game_id, :person_id, :work_type, :date])
       |> Record.preload_all
-      |> Record.set_limit(limit)
       |> Record.newest_first
       |> Repo.all
 
-    render(conn, "index.json", records: records)
-  end
-
-  def index(conn, _params) do
-    records = 
-      Record
-      |> Record.preload_all
-      |> Repo.all
-    
     render(conn, "index.json", records: records)
   end
 
@@ -67,4 +62,20 @@ defmodule Hours.RecordController do
         render(conn, "error.json", changeset: changeset)
     end
   end
+
+  def delete(conn, %{"id" => id}) do
+    game = Repo.get!(Record, id)
+    
+    case Repo.delete(game) do
+      {:ok, record} ->
+        record = Repo.preload(record, [:game, :person])
+        
+        conn
+        |> put_status(200)
+        |> render("show.json", record: record)
+      {:error, changeset} ->
+        render(conn, "error.json", changeset: changeset)
+    end
+  end
+
 end

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import Table from 'grommet/components/Table';
 import TableRow from 'grommet/components/TableRow';
-import EditIcon from 'grommet/components/icons/base/Edit';
 import TrashIcon from 'grommet/components/icons/base/Trash';
 import Button from 'grommet/components/Button';
 
@@ -17,7 +16,7 @@ export default class RecordList extends Component {
 
   render() {
     return (
-      <Table>
+      <Table scrollable={true}>
         <thead>
           <tr>
             <th><b>Hours</b></th>
@@ -25,7 +24,6 @@ export default class RecordList extends Component {
             <th><b>Person</b></th>
             <th><b>Type</b></th>
             <th><b>Date</b></th>
-            <th></th>
             <th></th>
           </tr>
         </thead>
@@ -38,8 +36,10 @@ export default class RecordList extends Component {
                 <td>{record.person.name}</td>
                 <td>{record.work_type}</td>
                 <td>{this.formatDate(record.date)}</td>
-                <td><Button path={`records/${record.id}/edit`} icon={<EditIcon />}/></td>
-                <td><TrashIcon /></td>
+                <td>
+                  <Button onClick={() => this.props.onDeleteRecordClick(record)}
+                    icon={<TrashIcon />}/>
+                </td>
               </TableRow>
             )
           })}

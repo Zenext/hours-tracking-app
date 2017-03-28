@@ -9,7 +9,6 @@ import GameNew from './containers/GameNew';
 import GameEdit from './containers/GameEdit';
 import Records from './containers/Records';
 import RecordNew from './containers/RecordNew';
-import RecordEdit from './containers/RecordEdit';
 import People from './containers/People';
 import PersonNew from './containers/PersonNew';
 
@@ -17,7 +16,6 @@ export default (
   <Route path="/" component={App}>
     <Route path="/records" component={Records} />
     <Route path="/records/new" component={RecordNew} />
-    <Route path="/records/:name/edit" component={RecordEdit} />
     
     <Route path="/games" component={Games} />
     <Route path="/games/new" component={GameNew} />
