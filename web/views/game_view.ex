@@ -1,8 +1,6 @@
 defmodule Hours.GameView do
   use Hours.Web, :view
 
-  alias Hours.RecordView
-
   alias Hours.TimexHelpers
 
   def render("index.json", %{games: games}) do
@@ -32,8 +30,7 @@ defmodule Hours.GameView do
       id: game.id,
       title: game.title,
       start_date: TimexHelpers.to_user_format(game.start_date),
-      abbrevation: game.abbrevation,
-      hours: RecordView.count_hours(game.records)
+      abbrevation: game.abbrevation
     }
   end
 end

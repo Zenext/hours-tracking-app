@@ -39,7 +39,12 @@ class PersonNew extends Component {
   }
 
   onNameChange = event => {
-    this.setState({name: event.target.value});
+    const str = event.target.value;
+    if (str.length > 40) {
+      return;
+    }
+    
+    this.setState({name: str});
   }
 
   render() {
@@ -53,7 +58,8 @@ class PersonNew extends Component {
             </Heading>
           </Header>
           <FormField label='Person Name'>
-            <TextInput onDOMChange={this.onNameChange} />
+            <TextInput onDOMChange={this.onNameChange}
+              value={this.state.name} />
           </FormField>
           <Footer pad={{"vertical": "medium"}}>
             <Button onClick={this.onFormSubmit} label='Add' type='submit' primary={true} />

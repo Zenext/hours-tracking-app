@@ -9,7 +9,7 @@ defmodule Hours.Repo.Migrations.CreateRecord do
       add :work_type, :string
       add :date, :date
 
-      timestamps
+      timestamps()
     end
 
     create index(:records, [:game_id, :person_id])

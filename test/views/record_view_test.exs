@@ -4,7 +4,7 @@ defmodule Hours.RecordViewTest do
   alias Hours.RecordView
 
   test "index.json" do
-    record = insert(:record)
+    record = build(:record)
     rendered_records = RecordView.render("index.json", %{records: [record]})
 
     assert rendered_records == [RecordView.record_json(record)]

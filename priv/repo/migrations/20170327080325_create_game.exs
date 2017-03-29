@@ -7,7 +7,7 @@ defmodule Hours.Repo.Migrations.CreateGame do
       add :abbrevation, :string
       add :start_date, :date
 
-      timestamps
+      timestamps()
     end
   end
 end

@@ -6,8 +6,9 @@ defmodule Hours.RecordController do
   import Hours.TimexHelpers, only: [to_date: 1]
 
   def index(conn,  params) do
-    if params["date"] != nil do
-      params = %{params | "date" => TimexHelpers.to_date(params["date"])}
+    params = case params["date"] do
+      nil -> params
+      _ -> %{params | "date" => TimexHelpers.to_date(params["date"])}
     end
     
     records = 

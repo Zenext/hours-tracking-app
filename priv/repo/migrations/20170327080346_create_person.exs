@@ -5,7 +5,7 @@ defmodule Hours.Repo.Migrations.CreatePerson do
     create table(:people) do
       add :name, :string
 
-      timestamps
+      timestamps()
     end
   end
 end

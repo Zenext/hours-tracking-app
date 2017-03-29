@@ -14,6 +14,6 @@ config :hours, Hours.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",
-  database: "hours_test",
+  database: "postgres",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

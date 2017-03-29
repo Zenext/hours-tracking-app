@@ -2,7 +2,7 @@ defmodule Hours.Record do
   use Hours.Web, :model
 
   @derive {Poison.Encoder, only: [:game_id, :person_id, :hours, :work_type, :date]}
-  alias Hours.{Record, Game, Person}
+  alias Hours.{Game, Person}
 
   import Hours.TimexHelpers, only: [to_date: 1]
 

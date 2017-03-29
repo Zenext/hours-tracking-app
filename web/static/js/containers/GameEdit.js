@@ -54,11 +54,21 @@ class GameEdit extends Component {
   }
 
   onGameTitleChange = event => {
-    this.setState({title: event.target.value});
+    const str = event.target.value;
+    if (str.length > 40) {
+      return;
+    }
+    
+    this.setState({title: str});
   }
 
   onAbbChange = event => {
-    this.setState({abbrevation: event.target.value});
+    const str = event.target.value;
+    if (str.length > 10) {
+      return;
+    }
+    
+    this.setState({abbrevation: str});
   }
 
   onDeleteGameClick = event => {

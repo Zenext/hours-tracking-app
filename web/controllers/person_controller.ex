@@ -1,7 +1,7 @@
 defmodule Hours.PersonController do
   use Hours.Web, :controller
   
-  alias Hours.{Person, Record}
+  alias Hours.Person  
   
   def index(conn, _params) do
     people = Repo.all(Person)

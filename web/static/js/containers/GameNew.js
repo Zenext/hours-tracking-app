@@ -44,11 +44,21 @@ class GameNew extends Component {
   }
 
   onGameTitleChange = (event) => {
-    this.setState({title: event.target.value});
+    const str = event.target.value;
+    if (str.length > 40) {
+      return;
+    }
+    
+    this.setState({title: str});
   }
 
   onAbbChange = (event) => {
-    this.setState({abbrevation: event.target.value});
+    const str = event.target.value;
+    if (str.length > 10) {
+      return;
+    }
+    
+    this.setState({abbrevation: str});
   }
 
   onDateChange = (value) => {
@@ -66,10 +76,12 @@ class GameNew extends Component {
             </Heading>
           </Header>
           <FormField label='Game Name'>
-            <TextInput onDOMChange={this.onGameTitleChange} />
+            <TextInput onDOMChange={this.onGameTitleChange}
+              value={this.state.title} />
           </FormField>
           <FormField label='Abbrevation'>
-            <TextInput onDOMChange={this.onAbbChange} />
+            <TextInput onDOMChange={this.onAbbChange}
+              value={this.state.abbrevation} />
           </FormField>
           <FormField label='Start date'>
             <DateTime format='DD/MM/YYYY'

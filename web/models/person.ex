@@ -19,7 +19,7 @@ defmodule Hours.Person do
     |> cast(params, [:name])
     |> put_assoc(:records, [])
     |> validate_required([:name])
-    |> validate_length(:name, max: 30)
+    |> validate_length(:name, max: 40)
   end
 
   def preload_records(query) do
