@@ -98,7 +98,7 @@ class Records extends Component {
   }
   
   loadMoreRecords = () => {
-    this.setState({recordsLimit: this.state.recordsLimit + 5});
+    this.setState({recordsLimit: this.state.records.length + 5});
   }
 
   resetFilters = () => {
